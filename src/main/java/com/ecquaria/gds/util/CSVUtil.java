@@ -1,6 +1,8 @@
 package com.ecquaria.gds.util;
 
 import com.ecquaria.gds.constants.ApplicationConstants;
+import com.ecquaria.gds.exception.ColumnMismatchException;
+import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
 import com.ecquaria.gds.model.Employee;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVUtil {
-    public static List<Employee> csvToEmployee(InputStream is) {
+    public static List<Employee> csvToEmployee(InputStream is) throws ColumnMismatchException, DuplicateLoginOrIDException {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
@@ -28,7 +30,8 @@ public class CSVUtil {
             for (CSVRecord csvRecord : csvRecords) {
 
                 if (isComment(csvRecord)) continue;
-                if (!isFourColumnsFilled(csvRecord)) continue;
+                if (!isFourColumnsFilled(csvRecord)) throw new ColumnMismatchException("Incorrect number of csv columns");
+
                 Employee employee = new Employee(
                         csvRecord.get(0),
                         csvRecord.get(1),
@@ -36,9 +39,8 @@ public class CSVUtil {
                         new BigDecimal(csvRecord.get(3))
                 );
 
-                if (isUniqueLoginAndID(employee, employees)) {
-                    employees.add(employee);
-                }
+                if (!isUniqueLoginAndID(employee, employees)) throw new DuplicateLoginOrIDException("Repeated Employee Login or ID in csv file");
+                employees.add(employee);
             }
 
             return employees;
