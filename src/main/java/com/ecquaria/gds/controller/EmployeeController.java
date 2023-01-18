@@ -32,6 +32,12 @@ public class EmployeeController {
         String message = "";
         String error = "";
 
+        if (file.isEmpty()) {
+            message = "File: " + file.getOriginalFilename() + " is empty!";
+            error = "Empty files are not permitted";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
+        }
+
         if (CSVUtil.hasCSVFormat(file)) {
             try {
                 csvService.save(file);
