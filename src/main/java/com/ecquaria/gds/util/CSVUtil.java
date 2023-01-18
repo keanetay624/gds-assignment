@@ -30,7 +30,8 @@ public class CSVUtil {
             for (CSVRecord csvRecord : csvRecords) {
 
                 if (isComment(csvRecord)) continue;
-                if (!isFourColumnsFilled(csvRecord)) throw new ColumnMismatchException("Incorrect number of csv columns");
+                if (isLessThanFourColumns(csvRecord)) throw new ColumnMismatchException("Too few columns in CSV file");
+                if (isMoreThanFourColumns(csvRecord)) throw new ColumnMismatchException("Too many columns in CSV file");
 
                 Employee employee = new Employee(
                         csvRecord.get(0),
@@ -57,8 +58,12 @@ public class CSVUtil {
         return !csvRecord.get(0).isEmpty() && csvRecord.get(0).charAt(0) == ApplicationConstants.HASH;
     }
 
-    public static boolean isFourColumnsFilled(CSVRecord csvRecord) {
-        return !csvRecord.get(0).isEmpty() && !csvRecord.get(1).isEmpty() && !csvRecord.get(2).isEmpty() && !csvRecord.get(3).isEmpty();
+    public static boolean isLessThanFourColumns(CSVRecord csvRecord) {
+        return csvRecord.get(0).isEmpty() || csvRecord.get(1).isEmpty() || csvRecord.get(2).isEmpty() || csvRecord.get(3).isEmpty();
+    }
+
+    public static boolean isMoreThanFourColumns(CSVRecord csvRecord) {
+        return csvRecord.size() > 4;
     }
 
     public static boolean isUniqueLoginAndID(Employee employee, List<Employee> employees) {
