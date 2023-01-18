@@ -1,5 +1,6 @@
-package com.ecquaria.gds.dto;
+package com.ecquaria.gds.repository;
 
+import com.ecquaria.gds.model.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

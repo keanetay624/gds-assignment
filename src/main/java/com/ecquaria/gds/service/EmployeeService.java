@@ -1,7 +1,7 @@
 package com.ecquaria.gds.service;
 
-import com.ecquaria.gds.dto.Employee;
-import com.ecquaria.gds.dto.EmployeeRepository;
+import com.ecquaria.gds.model.Employee;
+import com.ecquaria.gds.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

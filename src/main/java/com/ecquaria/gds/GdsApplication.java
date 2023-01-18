@@ -1,7 +1,7 @@
 package com.ecquaria.gds;
 
-import com.ecquaria.gds.dto.Employee;
-import com.ecquaria.gds.dto.EmployeeRepository;
+import com.ecquaria.gds.model.Employee;
+import com.ecquaria.gds.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +22,7 @@ public class GdsApplication implements CommandLineRunner {
 	}
 
 
-	void createGroceryItems() {
+	void createEmployee() {
 		System.out.println("Data creation started...");
 		employeeRepository.save(new Employee("hi", "keane", BigDecimal.TEN));
 		System.out.println("Data creation complete...");
@@ -30,6 +30,6 @@ public class GdsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		createGroceryItems();
+//		createEmployee();
 	}
 }
