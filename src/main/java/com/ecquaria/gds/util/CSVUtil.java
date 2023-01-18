@@ -3,6 +3,7 @@ package com.ecquaria.gds.util;
 import com.ecquaria.gds.constants.ApplicationConstants;
 import com.ecquaria.gds.exception.ColumnMismatchException;
 import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
+import com.ecquaria.gds.exception.InvalidSalaryFormatException;
 import com.ecquaria.gds.model.Employee;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVUtil {
-    public static List<Employee> csvToEmployee(InputStream is) throws ColumnMismatchException, DuplicateLoginOrIDException {
+    public static List<Employee> csvToEmployee(InputStream is) throws ColumnMismatchException, DuplicateLoginOrIDException, InvalidSalaryFormatException {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
@@ -32,6 +33,7 @@ public class CSVUtil {
                 if (isComment(csvRecord)) continue;
                 if (isLessThanFourColumns(csvRecord)) throw new ColumnMismatchException("Too few columns in CSV file");
                 if (isMoreThanFourColumns(csvRecord)) throw new ColumnMismatchException("Too many columns in CSV file");
+                checkSalaryFormat(csvRecord);
 
                 Employee employee = new Employee(
                         csvRecord.get(0),
@@ -71,6 +73,18 @@ public class CSVUtil {
             if (e.getEmployeeId().equals(employee.getEmployeeId()) || e.getLogin().equals(employee.getLogin())) return false;
         }
         return true;
+    }
+
+    public static void checkSalaryFormat(CSVRecord csvRecord) throws InvalidSalaryFormatException {
+        try {
+            String toEvaluate = csvRecord.get(3);
+            Double salary = Double.parseDouble(toEvaluate);
+            if (salary < 0) {
+                throw new InvalidSalaryFormatException("Salary cannot be less than zeo.");
+            }
+        } catch (NumberFormatException e) {
+            throw new InvalidSalaryFormatException("Salary must follow double format");
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.ecquaria.gds.controller;
 
 import com.ecquaria.gds.exception.ColumnMismatchException;
 import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
+import com.ecquaria.gds.exception.InvalidSalaryFormatException;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.model.ResponseMessage;
 import com.ecquaria.gds.service.CSVService;
@@ -43,7 +44,7 @@ public class EmployeeController {
                 csvService.save(file);
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            } catch (ColumnMismatchException | DuplicateLoginOrIDException e) {
+            } catch (ColumnMismatchException | DuplicateLoginOrIDException | InvalidSalaryFormatException e) {
                 message = "Could not upload the file: " + file.getOriginalFilename() + "!";
                 error = e.getMessage();
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
