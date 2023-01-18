@@ -80,7 +80,7 @@ public class CSVUtil {
             String toEvaluate = csvRecord.get(3);
             Double salary = Double.parseDouble(toEvaluate);
             if (salary < 0) {
-                throw new InvalidSalaryFormatException("Salary cannot be less than zeo.");
+                throw new InvalidSalaryFormatException("Salary cannot be less than zero.");
             }
         } catch (NumberFormatException e) {
             throw new InvalidSalaryFormatException("Salary must follow double format");
