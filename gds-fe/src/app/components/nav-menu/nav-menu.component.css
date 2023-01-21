@@ -1,0 +1,15 @@
+div {
+    background-color: gray;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.user-profile {
+    background-color: rgb(59, 59, 59);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+
+}
