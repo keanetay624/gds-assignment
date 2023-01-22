@@ -46,27 +46,27 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         }
 
-        if (CSVUtil.hasCSVFormat(file)) {
-            try {
-                csvService.save(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            } catch (ColumnMismatchException | DuplicateLoginOrIDException | InvalidSalaryFormatException e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                error = e.getMessage();
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
-            } catch (DuplicateKeyException e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                error = "Duplicate key of record in database";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
-            } catch (Exception e) {
-                e.printStackTrace();
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-            }
+        if (!CSVUtil.hasCSVFormat(file)) {
+            message = "Please upload a csv file!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
 
-        message = "Please upload a csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        try {
+            csvService.save(file);
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (ColumnMismatchException | DuplicateLoginOrIDException | InvalidSalaryFormatException e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
+        } catch (DuplicateKeyException e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            error = "Duplicate key of record in database";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
     }
 }
