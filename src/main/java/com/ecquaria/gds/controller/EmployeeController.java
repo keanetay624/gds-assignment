@@ -24,14 +24,21 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final CSVService csvService;
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<ResponseMessage> getEmployeesByParams(
+            @RequestParam(name = "minSalary") String minSalary,
+            @RequestParam(name = "maxSalary") String maxSalary,
+            @RequestParam(name = "limit") String limit,
+            @RequestParam(name = "offset") String offset,
+            @RequestParam(name = "sort") String sort) {
+        List<Employee> list = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
     }
 
     @PostMapping("upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        String error = "";
+        String message;
+        String error;
 
         if (file.isEmpty()) {
             message = "File: " + file.getOriginalFilename() + " is empty!";
