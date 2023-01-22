@@ -8,6 +8,7 @@ import com.ecquaria.gds.model.ResponseMessage;
 import com.ecquaria.gds.service.CSVService;
 import com.ecquaria.gds.service.EmployeeService;
 import com.ecquaria.gds.util.CSVUtil;
+import com.ecquaria.gds.util.ValidatorUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -30,9 +31,21 @@ public class EmployeeController {
             @RequestParam(name = "limit") String limit,
             @RequestParam(name = "offset") String offset,
             @RequestParam(name = "sort") String sort) {
-        List<Employee> list = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
+        String message;
+        String error;
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        try {
+            ValidatorUtil.checkSalaryFormat(minSalary);
+            ValidatorUtil.checkSalaryFormat(maxSalary);
+
+            List<Employee> list = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (InvalidSalaryFormatException e) {
+            message = "Invalid Salary Format";
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
+        }
+
     }
 
     @PostMapping("upload")
