@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 @SpringBootApplication
 @EnableMongoRepositories
-public class GdsApplication implements CommandLineRunner {
+public class GdsApplication {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
@@ -21,15 +21,4 @@ public class GdsApplication implements CommandLineRunner {
 		SpringApplication.run(GdsApplication.class, args);
 	}
 
-
-	void createEmployee() {
-		System.out.println("Data creation started...");
-		employeeRepository.save(new Employee("hi", "keane", BigDecimal.TEN));
-		System.out.println("Data creation complete...");
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-//		createEmployee();
-	}
 }
