@@ -20,6 +20,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("users")
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -46,6 +47,11 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
 
+    }
+
+    @GetMapping("noParams")
+    public ResponseEntity<ResponseMessage> getEmployeesByParams() {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("testing",""));
     }
 
     @PostMapping("upload")
