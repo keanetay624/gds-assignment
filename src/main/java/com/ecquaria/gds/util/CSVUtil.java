@@ -70,7 +70,7 @@ public class CSVUtil {
 
     public static boolean isUniqueLoginAndID(Employee employee, List<Employee> employees) {
         for (Employee e : employees) {
-            if (e.getEmployeeId().equals(employee.getEmployeeId()) || e.getLogin().equals(employee.getLogin())) return false;
+            if (e.getId().equals(employee.getId()) || e.getLogin().equals(employee.getLogin())) return false;
         }
         return true;
     }

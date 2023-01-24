@@ -11,19 +11,19 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-@Data // for lombok
-@Document // for use with collections. Mongodb
+@Data
+@Document
 public class Employee {
     @Id
-    private String employeeId;
+    private String id;
+    private String name;
     @Indexed(unique = true)
     private String login;
-    private String employeeName;
     private BigDecimal salary;
 
-    public Employee(String login, String employeeName, BigDecimal salary) {
+    public Employee(String login, String name, BigDecimal salary) {
         this.login = login;
-        this.employeeName = employeeName;
+        this.name = name;
         this.salary = salary;
     }
 }
