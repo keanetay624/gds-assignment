@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Employee } from '../Employee';
 import { EMPLOYEES } from '../mock-employees';
 
@@ -9,7 +10,8 @@ export class EmployeeService {
 
   constructor() { }
 
-  getEmployeesByParams() {
-    return EMPLOYEES;
+  getEmployeesByParams(): Observable<Employee[]> {
+    const employees = of(EMPLOYEES);
+    return employees;
   }
 }

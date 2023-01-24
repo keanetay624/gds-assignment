@@ -14,6 +14,8 @@ export class EmployeesListComponent {
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.employees = this.employeeService.getEmployeesByParams();
+    this.employeeService.getEmployeesByParams().subscribe(
+      (employees) => (this.employees = employees)
+    );
   }
 }
