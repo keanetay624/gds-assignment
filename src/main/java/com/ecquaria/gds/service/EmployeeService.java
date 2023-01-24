@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class EmployeeService {
                                                String limit, String offset,String sort) {
         final Pageable pageableRequest = PageRequest.of(0, Integer.parseInt(limit));
         Query query = new Query();
-        query.addCriteria(Criteria.where("salary").lt(maxSalary).gt(minSalary));
+        BigDecimal bd1 = new BigDecimal(minSalary);
+        BigDecimal bd2 = new BigDecimal(maxSalary);
+        query.addCriteria(Criteria.where("salary").gt(bd1.doubleValue()).lte(bd2.doubleValue()));
         query.limit(Integer.parseInt(limit));
 
         List<String> validatedSortValues = isValidSort(sort);
@@ -43,6 +46,9 @@ public class EmployeeService {
             query.with(pageableRequest);
         }
 
+        if (!offset.isEmpty()) {
+            query.skip(Integer.parseInt(offset));
+        }
         return mongoTemplate.find(query, Employee.class);
 
     }
