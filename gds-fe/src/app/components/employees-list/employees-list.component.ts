@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../Employee';
-import { EMPLOYEES } from '../../mock-employees';
+
 
 @Component({
   selector: 'app-employees-list',
@@ -8,5 +9,11 @@ import { EMPLOYEES } from '../../mock-employees';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent {
-  employees: Employee[] = EMPLOYEES
+  employees: Employee[] = [];
+
+  constructor(private employeeService: EmployeeService) { }
+
+  ngOnInit(): void {
+    this.employees = this.employeeService.getEmployeesByParams();
+  }
 }
