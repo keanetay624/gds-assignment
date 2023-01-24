@@ -14,9 +14,6 @@ import java.math.BigDecimal;
 @EnableMongoRepositories
 public class GdsApplication {
 
-	@Autowired
-	EmployeeRepository employeeRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(GdsApplication.class, args);
 	}
