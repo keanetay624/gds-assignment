@@ -1,3 +1,4 @@
+<app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
 <p><b>Employees</b></p>
 <div>
     <table>
@@ -18,4 +19,8 @@
         </tr>
 
     </table>
+</div>
+<div class="page-nav">
+    <button (click)="getPreviousPage()">Previous Page</button>
+    <button (click)="getNextPage()">Next Page</button>
 </div>

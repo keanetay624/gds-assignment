@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()">
+    <div class="form-control">
+        <label for="minSal">Minimum Salary</label>
+        <input type="text" name="minSal" id="minSal" [(ngModel)]="minSal" placeholder="$0.00">
+    </div>
+    <div class="form-control">
+        <label for="maxSal">Maximum Salary</label>
+        <input type="text" name="maxSal" id="maxSal" [(ngModel)]="maxSal" placeholder="$999,999.00">
+    </div>
+    <input type="submit" value="Search" class="btn">
+</form>
