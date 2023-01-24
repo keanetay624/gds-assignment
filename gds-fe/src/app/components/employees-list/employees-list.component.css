@@ -1,0 +1,12 @@
+* {
+    margin: 0 auto;
+}
+
+table {
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.employee {
+    background-color: rgb(202, 202, 202);
+}

@@ -1,1 +1,21 @@
-<p>employees-list works!</p>
+<p><b>Employees</b></p>
+<div>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Login</th>
+            <th>Salary</th>
+            <th>Action</th>
+        </tr>
+
+        <tr *ngFor="let employee of employees" class="employee">
+            <td>{{employee.id}}</td>
+            <td>{{employee.name}}</td>
+            <td>{{employee.login}}</td>
+            <td>{{employee.salary}}</td>
+            <td>btn edit | btn delete</td>
+        </tr>
+
+    </table>
+</div>

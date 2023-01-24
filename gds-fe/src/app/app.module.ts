@@ -7,13 +7,15 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavBtnComponent } from './components/nav-btn/nav-btn.component';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     EmployeesListComponent,
-    NavBtnComponent
+    NavBtnComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
