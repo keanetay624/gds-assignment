@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Employee } from '../Employee';
 import { map } from 'rxjs/operators';
 
@@ -40,6 +40,21 @@ export class EmployeeService {
         .append('offset', offset)
         .append('sort', sort)
     })
+      .pipe(
+        map((response) => {
+          return response.results;
+        })
+      )
+  }
+
+  doUploadEmployees(file:File): Observable<Employee[]>{
+    let formData = new FormData();
+    formData.append("reportProgress", 'true');
+    formData.append('file', file)
+
+    return this.http.post<any>(`${this.apiUrl}/upload`,
+      formData, {headers:new HttpHeaders()
+      .append('Accept', '*/*')})
       .pipe(
         map((response) => {
           return response.results;

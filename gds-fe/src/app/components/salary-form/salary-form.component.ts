@@ -11,7 +11,7 @@ import { Salary } from '../../Salary';
 export class SalaryFormComponent {
   @Output() onSearchSalaryForm: EventEmitter<Salary> = new EventEmitter;
   minSal: string = '0';
-  maxSal: string = '999,999';
+  maxSal: string = '999999';
   employees: Employee[] = [];
 
   constructor(private employeeService: EmployeeService) { }
@@ -22,6 +22,11 @@ export class SalaryFormComponent {
       maxSal: this.maxSal
     }
     this.onSearchSalaryForm.emit(newSalary)
+  }
+
+  onFileSelected(event:any) {
+    const file = event.target.files[0];
+    this.employeeService.doUploadEmployees(file).subscribe();
   }
 
 }
