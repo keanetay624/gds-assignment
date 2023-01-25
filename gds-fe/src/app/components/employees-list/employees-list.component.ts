@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../Employee';
 import { Salary } from 'src/app/Salary';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -10,6 +13,9 @@ import { Salary } from 'src/app/Salary';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent {
+  faImage = faImage;
+  faPencil = faPencilAlt;
+  faTrash = faTrash;
   employees: Employee[] = [];
   sortAsc: boolean = true;
   sortField: string = "id";

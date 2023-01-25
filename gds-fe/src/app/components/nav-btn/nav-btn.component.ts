@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-nav-btn',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-btn.component.css']
 })
 export class NavBtnComponent {
-
+  @Input() count = '';
+  faImage = faImage;
 }

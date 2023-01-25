@@ -1,26 +1,33 @@
-<app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
-<p><b>Employees</b></p>
-<div>
-    <table>
-        <tr>
-            <th (click)="onSortFieldClick('id')">id</th>
-            <th (click)="onSortFieldClick('name')">Name</th>
-            <th (click)="onSortFieldClick('login')">Login</th>
-            <th (click)="onSortFieldClick('salary')">Salary</th>
-            <th>Action</th>
-        </tr>
-
-        <tr *ngFor="let employee of employees" class="employee">
-            <td>{{employee.id}}</td>
-            <td>{{employee.name}}</td>
-            <td>{{employee.login}}</td>
-            <td>${{employee.salary}}</td>
-            <td>btn edit | btn delete</td>
-        </tr>
-
-    </table>
-</div>
-<div class="page-nav">
-    <button (click)="getPreviousPage()">Previous Page</button>
-    <button (click)="getNextPage()">Next Page</button>
+<div class="employees-list">
+    <app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
+    <div class="wrapper">
+        <table>
+            <h2><b>Employees</b></h2>
+            <tr>
+                <th (click)="onSortFieldClick('id')">id</th>
+                <th (click)="onSortFieldClick('name')">Name</th>
+                <th (click)="onSortFieldClick('login')">Login</th>
+                <th (click)="onSortFieldClick('salary')">Salary</th>
+                <th>Action</th>
+            </tr>
+    
+            <tr *ngFor="let employee of employees" class="employee">
+                <td>
+                    <fa-icon [icon]="faImage" size="1x" class="right-offset"></fa-icon>
+                    {{employee.id}}</td>
+                <td>{{employee.name}}</td>
+                <td>{{employee.login}}</td>
+                <td>${{employee.salary}}</td>
+                <td >
+                    <fa-icon [icon]="faPencil" size="1x" class="right-offset"></fa-icon>
+                    <fa-icon [icon]="faTrash" size="1x"></fa-icon>
+                </td>
+            </tr>
+    
+        </table>
+    </div>
+    <div class="page-nav  wrapper">
+        <button (click)="getPreviousPage()">Previous Page</button>
+        <button (click)="getNextPage()">Next Page</button>
+    </div>
 </div>
