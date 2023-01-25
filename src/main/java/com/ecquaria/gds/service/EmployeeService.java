@@ -32,7 +32,7 @@ public class EmployeeService {
         Query query = new Query();
         BigDecimal bd1 = new BigDecimal(minSalary);
         BigDecimal bd2 = new BigDecimal(maxSalary);
-        query.addCriteria(Criteria.where("salary").gt(bd1.doubleValue()).lte(bd2.doubleValue()));
+        query.addCriteria(Criteria.where("salary").gte(bd1.doubleValue()).lte(bd2.doubleValue()));
         query.limit(Integer.parseInt(limit));
 
         List<String> validatedSortValues = isValidSort(sort);
