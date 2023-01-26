@@ -82,7 +82,7 @@ public class EmployeeController {
             List<Employee> list = new ArrayList<>();
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
-        } catch (InvalidIdException e) {
+        } catch (InvalidIdException | InvalidSalaryFormatException e) {
             message = "Failed to create employee with id: " + e;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
@@ -129,7 +129,7 @@ public class EmployeeController {
             List<Employee> list = new ArrayList<>();
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
-        } catch (InvalidIdException e) {
+        } catch (InvalidIdException | InvalidSalaryFormatException e) {
             message = "Failed to update employee with id: " + e;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));

@@ -1,8 +1,10 @@
 package com.ecquaria.gds.service;
 
 import com.ecquaria.gds.exception.InvalidIdException;
+import com.ecquaria.gds.exception.InvalidSalaryFormatException;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.repository.EmployeeRepository;
+import com.ecquaria.gds.util.ValidatorUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,12 +29,14 @@ public class EmployeeService {
         return employeeRepository.findEmployeesById(id);
     }
 
-    public Employee addEmployee(String id, String name, String login, String salary) throws InvalidIdException {
+    public Employee addEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException {
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (employeeRepository.existsById(id)) {
             throw new InvalidIdException("ID" + id + " already exists!");
         }
+
+        ValidatorUtil.checkSalaryFormat(salary);
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
@@ -57,12 +61,14 @@ public class EmployeeService {
         return e;
     }
 
-    public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException {
+    public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException {
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (!employeeRepository.existsById(id)) {
             throw new InvalidIdException("ID" + id + " does not exist!");
         }
+
+        ValidatorUtil.checkSalaryFormat(salary);
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
