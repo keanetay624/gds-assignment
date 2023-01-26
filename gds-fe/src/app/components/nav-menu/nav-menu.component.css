@@ -26,3 +26,10 @@
     margin-top: 60px;
     margin-bottom: 30px;
 }
+
+/* hide the side nav below 768px */
+@media only screen and (max-width: 768px) {
+    * {
+        display: none;
+    }
+  }

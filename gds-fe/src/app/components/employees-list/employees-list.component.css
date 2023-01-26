@@ -1,6 +1,6 @@
 * {
     margin: 0 auto;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .employees {
@@ -29,8 +29,9 @@ tr {
 }
 
 .main {
-    width: 100%;
+    width: 70%;
     max-height: 50%;
     min-height: 50%;
+    overflow: auto;
 }
 
