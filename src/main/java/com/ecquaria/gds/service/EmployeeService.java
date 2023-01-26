@@ -45,6 +45,17 @@ public class EmployeeService {
         return e;
     }
 
+    public Employee updateEmployee(String id, String name, String login, String salary) {
+        Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
+
+        if (!employeeRepository.existsById(id)) {
+            // replace with exception
+            return null;
+        }
+        employeeRepository.save(newEmployee);
+        return newEmployee;
+    }
+
     public List<Employee> getEmployeesByParams(String minSalary, String maxSalary,
                                                String limit, String offset,String sort) {
         final Pageable pageableRequest = PageRequest.of(0, Integer.parseInt(limit));

@@ -71,9 +71,9 @@ public class EmployeeController {
 
     @PostMapping("{id}")
     public ResponseEntity<ResponseMessage> addEmployee(@PathVariable String id,
-            @RequestParam(name = "name") String name,
-            @RequestParam(name = "login") String login,
-            @RequestParam(name = "salary") String salary) {
+                                                       @RequestParam(name = "name") String name,
+                                                       @RequestParam(name = "login") String login,
+                                                       @RequestParam(name = "salary") String salary) {
         String message;
         String error;
 
@@ -102,6 +102,27 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
         } catch (Exception e) {
             message = "Failed to delete employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
+        }
+
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<ResponseMessage> updateEmployee(@PathVariable String id,
+                                                          @RequestParam(name = "name") String name,
+                                                          @RequestParam(name = "login") String login,
+                                                          @RequestParam(name = "salary") String salary) {
+        String message;
+        String error;
+
+        try {
+            Employee e = employeeService.updateEmployee(id, name, login, salary);
+            List<Employee> list = new ArrayList<>();
+            list.add(e);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (Exception e) {
+            message = "Failed to update employee with id: " + e;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
