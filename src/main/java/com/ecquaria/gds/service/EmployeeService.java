@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -34,6 +35,14 @@ public class EmployeeService {
         }
         employeeRepository.save(newEmployee);
         return newEmployee;
+    }
+
+    public Optional<Employee> deleteEmployee(String id) {
+        Optional<Employee> e = employeeRepository.findById(id);
+        if (e.isPresent()) {
+            employeeRepository.deleteById(id);
+        }
+        return e;
     }
 
     public List<Employee> getEmployeesByParams(String minSalary, String maxSalary,

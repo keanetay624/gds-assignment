@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -83,6 +84,24 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
         } catch (Exception e) {
             message = "Failed to create employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
+        }
+
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<ResponseMessage> deleteEmployee(@PathVariable String id) {
+        String message;
+        String error;
+
+        try {
+            Optional<Employee> e = employeeService.deleteEmployee(id);
+            List<Employee> list = new ArrayList<>();
+            e.ifPresent(list::add);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (Exception e) {
+            message = "Failed to delete employee with id: " + e;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
