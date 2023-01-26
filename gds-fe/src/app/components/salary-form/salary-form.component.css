@@ -5,3 +5,7 @@ form {
     display: flex;
     flex-direction: row;
 }
+
+.salary-element {
+    width: 30%;
+}

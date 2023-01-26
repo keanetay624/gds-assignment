@@ -1,7 +1,7 @@
-<div class="employees-list">
-    <app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
-    <div class="wrapper">
-        <table>
+<div class="d-flex flex-column employees justify-content-around">
+    <app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" style="width: 100%;"/>
+    <div class="d-flex flex-column main">
+        <table >
             <h2><b>Employees</b></h2>
             <tr>
                 <th (click)="onSortFieldClick('id')">id</th>
@@ -12,13 +12,13 @@
             </tr>
     
             <tr *ngFor="let employee of employees" class="employee">
-                <td>
+                <td style="width: 20%;">
                     <fa-icon [icon]="faImage" size="1x" class="right-offset"></fa-icon>
                     {{employee.id}}</td>
-                <td>{{employee.name}}</td>
-                <td>{{employee.login}}</td>
-                <td>${{employee.salary}}</td>
-                <td >
+                <td style="width: 20%;">{{employee.name}}</td>
+                <td style="width: 20%;">{{employee.login}}</td>
+                <td style="width: 20%;">${{employee.salary}}</td>
+                <td style="width: 20%;">
                     <fa-icon [icon]="faPencil" size="1x" class="right-offset"></fa-icon>
                     <fa-icon [icon]="faTrash" size="1x"></fa-icon>
                 </td>
@@ -26,8 +26,12 @@
     
         </table>
     </div>
-    <div class="page-nav  wrapper">
-        <button (click)="getPreviousPage()">Previous Page</button>
-        <button (click)="getNextPage()">Next Page</button>
+    <div class="d-flex flex-row page-nav">
+        <div class="sub">
+            <button (click)="getPreviousPage()">Previous Page</button>
+        </div>
+        <div class="sub">
+            <button (click)="getNextPage()">Next Page</button>
+        </div>
     </div>
 </div>

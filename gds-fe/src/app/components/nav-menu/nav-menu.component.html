@@ -1,14 +1,22 @@
-<div class="wrapper">
-    <div class="profile">
-        <h3 class="user-profile">
-            <fa-icon [icon]="faImage" size="5x"></fa-icon>
-        </h3>
-        <h2>long user name</h2>
-    </div>
-    <div class="menu">
-        <app-nav-btn count="1"/>
-        <app-nav-btn count="2"/>
-        <app-nav-btn count="3"/>
-        <app-nav-btn count="4"/>
-    </div>
-</div>
+<ul class="nav flex-column nav-fill nav-wrapper">
+    <li class="nav-item">
+        <div class="profile">
+            <h3 class="user-profile">
+                <fa-icon [icon]="faImage" size="3x"></fa-icon>
+            </h3>
+            <h2>long user name</h2>
+        </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#"><fa-icon [icon]="faImage" size="1x"></fa-icon>Function 1</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#"><fa-icon [icon]="faImage" size="1x"></fa-icon>Function 2</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#"><fa-icon [icon]="faImage" size="1x"></fa-icon>Function 3</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#"><fa-icon [icon]="faImage" size="1x"></fa-icon>Disabled</a>
+    </li>
+</ul>
