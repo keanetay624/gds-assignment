@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,9 +50,22 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("noParams")
-    public ResponseEntity<ResponseMessage> getEmployeesByParams() {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("testing",""));
+    @GetMapping("{id}")
+    public ResponseEntity<ResponseMessage> getEmployeeById(@PathVariable String id) {
+        String message;
+        String error;
+
+        try {
+            Employee e = employeeService.getEmployeeById(id);
+            List<Employee> list = new ArrayList<>();
+            list.add(e);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (Exception e) {
+            message = "Failed to get employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
+        }
+
     }
 
     @PostMapping("upload")

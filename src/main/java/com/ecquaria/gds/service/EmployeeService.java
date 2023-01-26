@@ -21,9 +21,8 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final MongoTemplate mongoTemplate;
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-
+    public Employee getEmployeeById(String id) {
+        return employeeRepository.findEmployeesById(id);
     }
 
     public List<Employee> getEmployeesByParams(String minSalary, String maxSalary,
