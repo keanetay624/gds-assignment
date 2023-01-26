@@ -6,9 +6,9 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
-    @Query("{name: '?0'}")
-    Employee findEmployeeByEmployeeName(String name);
+    @Query("{_id: '?0'}")
+    Employee findEmployeesById(String id);
 
-    public long count();
+    long count();
 
 }

@@ -68,6 +68,27 @@ public class EmployeeController {
 
     }
 
+    @PostMapping("{id}")
+    public ResponseEntity<ResponseMessage> addEmployee(@PathVariable String id,
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "login") String login,
+            @RequestParam(name = "salary") String salary) {
+        String message;
+        String error;
+
+        try {
+            Employee e = employeeService.addEmployee(id, name, login, salary);
+            List<Employee> list = new ArrayList<>();
+            list.add(e);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (Exception e) {
+            message = "Failed to create employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
+        }
+
+    }
+
     @PostMapping("upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message;
