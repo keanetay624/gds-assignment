@@ -1,5 +1,6 @@
 package com.ecquaria.gds.service;
 
+import com.ecquaria.gds.exception.InvalidIdException;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -26,31 +27,41 @@ public class EmployeeService {
         return employeeRepository.findEmployeesById(id);
     }
 
-    public Employee addEmployee(String id, String name, String login, String salary) {
+    public Employee addEmployee(String id, String name, String login, String salary) throws InvalidIdException {
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (employeeRepository.existsById(id)) {
-            // replace with exception
-            return null;
+            throw new InvalidIdException("ID" + id + " already exists!");
         }
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
 
-    public Optional<Employee> deleteEmployee(String id) {
-        Optional<Employee> e = employeeRepository.findById(id);
-        if (e.isPresent()) {
-            employeeRepository.deleteById(id);
+    public Employee deleteEmployee(String id) throws InvalidIdException {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        Employee e = null;
+
+        if (id.isEmpty()) {
+            throw new InvalidIdException("ID cannot be empty!");
         }
+
+        if (!employeeRepository.existsById(id)) {
+            throw new InvalidIdException("ID" + id + " does not exist!");
+        }
+
+        if (optionalEmployee.isPresent()) {
+             e = optionalEmployee.get();
+        }
+
+        employeeRepository.deleteById(id);
         return e;
     }
 
-    public Employee updateEmployee(String id, String name, String login, String salary) {
+    public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException {
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (!employeeRepository.existsById(id)) {
-            // replace with exception
-            return null;
+            throw new InvalidIdException("ID" + id + " does not exist!");
         }
         employeeRepository.save(newEmployee);
         return newEmployee;

@@ -2,6 +2,7 @@ package com.ecquaria.gds.controller;
 
 import com.ecquaria.gds.exception.ColumnMismatchException;
 import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
+import com.ecquaria.gds.exception.InvalidIdException;
 import com.ecquaria.gds.exception.InvalidSalaryFormatException;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.model.ResponseMessage;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -82,6 +82,10 @@ public class EmployeeController {
             List<Employee> list = new ArrayList<>();
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (InvalidIdException e) {
+            message = "Failed to create employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
             message = "Failed to create employee with id: " + e;
             error = e.getMessage();
@@ -96,10 +100,14 @@ public class EmployeeController {
         String error;
 
         try {
-            Optional<Employee> e = employeeService.deleteEmployee(id);
+            Employee e = employeeService.deleteEmployee(id);
             List<Employee> list = new ArrayList<>();
-            e.ifPresent(list::add);
+            list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (InvalidIdException e) {
+            message = "Failed to delete employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
             message = "Failed to delete employee with id: " + e;
             error = e.getMessage();
@@ -121,6 +129,10 @@ public class EmployeeController {
             List<Employee> list = new ArrayList<>();
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+        } catch (InvalidIdException e) {
+            message = "Failed to update employee with id: " + e;
+            error = e.getMessage();
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
             message = "Failed to update employee with id: " + e;
             error = e.getMessage();
