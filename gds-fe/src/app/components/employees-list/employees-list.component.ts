@@ -183,12 +183,12 @@ export class EmployeesListComponent {
           this.employees = this.employees.filter(e => e.id != employees[0].id);
           this.employees.push(employees[0]);
         });
+    } else {
+      this.employeeService.addEmployee(this.employeeToSave).subscribe(
+        (employees) => {
+          this.employees.push(employees[0]);
+        });
     }
-
-    this.employeeService.addEmployee(this.employeeToSave).subscribe(
-      (employees) => {
-        this.employees.push(employees[0]);
-      });
     this.closeFormModal();
   }
 
