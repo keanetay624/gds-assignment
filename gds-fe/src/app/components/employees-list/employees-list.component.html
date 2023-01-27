@@ -3,7 +3,10 @@
     <app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
     <div class="d-flex flex-column main">
         <table class="table table-responsive">
-            <h2><b>Employees</b></h2>
+            <div class="header d-flex">
+                <h2><b>Employees</b></h2>
+                <button type="button" class="btn btn-primary" (click)="addEmployee()">Add</button>
+            </div>
             <tr>
                 <th (click)="onSortFieldClick('id')">id</th>
                 <th (click)="onSortFieldClick('name')">Name</th>
@@ -13,15 +16,15 @@
             </tr>
     
             <tr *ngFor="let employee of employees" class="employee">
-                <td style="width: 20%;">
+                <td style="width: 20%;" (click)="openModal(employee,'View Employee')">
                     <fa-icon [icon]="faImage" size="1x" class="right-offset"></fa-icon>
                     {{employee.id}}</td>
-                <td style="width: 20%;">{{employee.name}}</td>
-                <td style="width: 20%;">{{employee.login}}</td>
-                <td style="width: 20%;">${{employee.salary}}</td>
+                <td style="width: 20%;" (click)="openModal(employee,'View Employee')">{{employee.name}}</td>
+                <td style="width: 20%;" (click)="openModal(employee,'View Employee')">{{employee.login}}</td>
+                <td style="width: 20%;" (click)="openModal(employee,'View Employee')">${{employee.salary}}</td>
                 <td style="width: 20%;">
-                    <fa-icon [icon]="faPencil" size="1x" class="right-offset"></fa-icon>
-                    <fa-icon [icon]="faTrash" size="1x"></fa-icon>
+                    <fa-icon [icon]="faPencil" size="1x" class="right-offset" (click)="openModal(employee,'Edit Employee')"></fa-icon>
+                    <fa-icon [icon]="faTrash" size="1x" (click)="openModal(employee,'Delete Employee')"></fa-icon>
                 </td>
             </tr>
     
@@ -35,4 +38,40 @@
             <button (click)="getNextPage()">Next Page</button>
         </div>
     </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+        </div>
+        <div class="modal-body d-flex flex-column">
+            <form>
+                <div class="d-flex flex-row" style="min-width: 40px;">
+                    <label for="fieldId" class="flex-grow-1">Id:</label>
+                    <input type="text" id="fieldId" name="fieldId" [value]="this.employeeToSave.id" [disabled]="modalTitle !== ('Add Employee')" [(ngModel)]="employeeToSave.id">
+                </div>
+                <div class="d-flex flex-row" style="min-width: 40px;">
+                    <label for="fieldName" class="flex-grow-1">Name:</label>
+                    <input type="text" id="fieldName" name="fieldName" [value]="this.employeeToSave.name" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.name">
+                </div>
+                <div class="d-flex flex-row" style="min-width: 40px;">
+                    <label for="fieldLogin" class="flex-grow-1">Login:</label>
+                    <input type="text" id="fieldLogin" name="fieldLogin" [value]="this.employeeToSave.login" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.login">
+                </div>
+                <div class="d-flex flex-row" style="min-width: 40px;">
+                    <label for="fieldSalary" class="flex-grow-1">Salary:</label>
+                    <input type="text" id="fieldSalary" name="fieldSalary" [value]="this.employeeToSave.salary " [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.salary">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          <button *ngIf="modalTitle !== 'Delete Employee'" type="button" class="btn btn-primary" (click)="saveModal(modalTitle)">Save</button>
+          <button *ngIf="modalTitle === 'Delete Employee'" type="button" class="btn btn-danger" (click)="deleteEmployeeModal()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

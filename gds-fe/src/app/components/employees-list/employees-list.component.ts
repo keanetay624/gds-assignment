@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../Employee';
 import { Salary } from 'src/app/Salary';
@@ -6,6 +6,7 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
+declare var window:any;
 
 @Component({
   selector: 'app-employees-list',
@@ -13,6 +14,22 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent {
+  @Input() employee:Employee = {
+    id: '',
+    name: '',
+    login: '',
+    salary: ''
+  };
+
+  @Input() employeeToSave:Employee = {
+    id: '',
+    name: '',
+    login: '',
+    salary: ''
+  }
+
+  @Output() modalTitle = "";
+
   faImage = faImage;
   faPencil = faPencilAlt;
   faTrash = faTrash;
@@ -24,6 +41,9 @@ export class EmployeesListComponent {
   limit: string = '10';
   offset: string = '0';
   sortStr: string = "+id";
+
+  formModal:any;
+
 
   constructor(private employeeService: EmployeeService) { }
 
@@ -38,6 +58,9 @@ export class EmployeesListComponent {
     this.limit = '10';
     this.minSal = '0';
     this.maxSal = '999999';
+    this.formModal = new window.bootstrap.Modal(
+      document.getElementById("exampleModal")
+    );
   }
 
   onSortFieldClick(sortField: string) {
@@ -93,5 +116,64 @@ export class EmployeesListComponent {
         this.employees = [];
         this.employees = employees
       });
+  }
+
+  openModal(employee:Employee, action: string){
+    this.modalTitle = action;
+    this.formModal.show();
+    this.employee = employee;
+    this.employeeToSave = {...this.employee}
+  }
+
+  closeModal() {
+    this.formModal.hide();
+    this.employee = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    };
+    this.employeeToSave = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    }
+  }
+
+  saveModal(modalTitle: string) {
+    console.log("Saving employee...", this.employeeToSave)
+
+    if (modalTitle === 'Edit Employee') {
+      this.employeeService.updateEmployee(this.employeeToSave).subscribe(
+        (employees) => {
+          this.employees = this.employees.filter(e => e.id != employees[0].id);
+          this.employees.push(employees[0]);
+        });
+    }
+
+    this.employeeService.addEmployee(this.employeeToSave).subscribe(
+      (employees) => {
+        this.employees.push(employees[0]);
+      });
+    this.closeModal();
+  }
+
+  deleteEmployeeModal() {
+    this.employeeService.deleteEmployee(this.employeeToSave).subscribe(
+      (employees) => {
+        this.employees = this.employees.filter(e => e.id != employees[0].id);
+      });
+      this.closeModal();
+  }
+
+  addEmployee() {
+    const employeeToCreate:Employee = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    }
+    this.openModal(employeeToCreate, 'Add Employee');
   }
 }

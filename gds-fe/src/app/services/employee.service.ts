@@ -61,4 +61,42 @@ export class EmployeeService {
         })
       )
   }
+
+  updateEmployee(employee:Employee): Observable<Employee[]>{
+    let params = new HttpParams()
+    params = params.append("name", employee.name)
+    params = params.append('login', employee.login)
+    params = params.append('salary', employee.salary)
+
+    return this.http.patch<any>(`${this.apiUrl}/${employee.id}`, params)
+      .pipe(
+        map((response) => {
+          return response.results;
+        })
+      )
+  }
+
+  deleteEmployee(employee:Employee): Observable<Employee[]>{
+
+    return this.http.delete<any>(`${this.apiUrl}/${employee.id}`)
+      .pipe(
+        map((response) => {
+          return response.results;
+        })
+      )
+  }
+
+  addEmployee(employee:Employee): Observable<Employee[]>{
+    let params = new HttpParams()
+    params = params.append("name", employee.name)
+    params = params.append('login', employee.login)
+    params = params.append('salary', employee.salary)
+
+    return this.http.post<any>(`${this.apiUrl}/${employee.id}`, params)
+      .pipe(
+        map((response) => {
+          return response.results;
+        })
+      )
+  }
 }
