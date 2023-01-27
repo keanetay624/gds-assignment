@@ -43,6 +43,13 @@ export class EmployeesListComponent {
   sortStr: string = "+id";
 
   formModal:any;
+  confirmationModal:any;
+  employeeToDelete:Employee = {
+    id: '',
+    name: '',
+    login: '',
+    salary: ''
+  };
 
 
   constructor(private employeeService: EmployeeService) { }
@@ -60,6 +67,9 @@ export class EmployeesListComponent {
     this.maxSal = '999999';
     this.formModal = new window.bootstrap.Modal(
       document.getElementById("exampleModal")
+    );
+    this.confirmationModal = new window.bootstrap.Modal(
+      document.getElementById("confirmationModal")
     );
   }
 
@@ -125,7 +135,7 @@ export class EmployeesListComponent {
     this.employeeToSave = {...this.employee}
   }
 
-  closeModal() {
+  closeFormModal() {
     this.formModal.hide();
     this.employee = {
       id: '',
@@ -133,7 +143,30 @@ export class EmployeesListComponent {
       login: '',
       salary: ''
     };
+    this.employeeToDelete = this.employeeToSave;
     this.employeeToSave = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    }
+  }
+
+  closeConfirmationModal() {
+    this.confirmationModal.hide();
+    this.employee = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    };
+    this.employeeToSave = {
+      id: '',
+      name: '',
+      login: '',
+      salary: ''
+    }
+    this.employeeToDelete = {
       id: '',
       name: '',
       login: '',
@@ -156,15 +189,21 @@ export class EmployeesListComponent {
       (employees) => {
         this.employees.push(employees[0]);
       });
-    this.closeModal();
+    this.closeFormModal();
   }
 
   deleteEmployeeModal() {
-    this.employeeService.deleteEmployee(this.employeeToSave).subscribe(
+    this.confirmationModal.show();
+    this.closeFormModal();
+  }
+
+  confirmDeleteEmployee() {
+    console.log(this.employeeToDelete)
+    this.employeeService.deleteEmployee(this.employeeToDelete).subscribe(
       (employees) => {
         this.employees = this.employees.filter(e => e.id != employees[0].id);
       });
-      this.closeModal();
+    this.closeConfirmationModal();
   }
 
   addEmployee() {

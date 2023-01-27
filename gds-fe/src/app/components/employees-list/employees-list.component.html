@@ -40,38 +40,56 @@
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+            </div>
+            <div class="modal-body d-flex flex-column">
+                <form>
+                    <div class="d-flex flex-row" style="min-width: 40px;">
+                        <label for="fieldId" class="flex-grow-1">Id:</label>
+                        <input type="text" id="fieldId" name="fieldId" [value]="this.employeeToSave.id" [disabled]="modalTitle !== ('Add Employee')" [(ngModel)]="employeeToSave.id">
+                    </div>
+                    <div class="d-flex flex-row" style="min-width: 40px;">
+                        <label for="fieldName" class="flex-grow-1">Name:</label>
+                        <input type="text" id="fieldName" name="fieldName" [value]="this.employeeToSave.name" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.name">
+                    </div>
+                    <div class="d-flex flex-row" style="min-width: 40px;">
+                        <label for="fieldLogin" class="flex-grow-1">Login:</label>
+                        <input type="text" id="fieldLogin" name="fieldLogin" [value]="this.employeeToSave.login" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.login">
+                    </div>
+                    <div class="d-flex flex-row" style="min-width: 40px;">
+                        <label for="fieldSalary" class="flex-grow-1">Salary:</label>
+                        <input type="text" id="fieldSalary" name="fieldSalary" [value]="this.employeeToSave.salary " [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.salary">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeFormModal()">Close</button>
+            <button *ngIf="modalTitle !== 'Delete Employee'" type="button" class="btn btn-primary" (click)="saveModal(modalTitle)">Save</button>
+            <button *ngIf="modalTitle === 'Delete Employee'" type="button" class="btn btn-danger" (click)="deleteEmployeeModal()">Delete</button>
+            </div>
         </div>
-        <div class="modal-body d-flex flex-column">
-            <form>
-                <div class="d-flex flex-row" style="min-width: 40px;">
-                    <label for="fieldId" class="flex-grow-1">Id:</label>
-                    <input type="text" id="fieldId" name="fieldId" [value]="this.employeeToSave.id" [disabled]="modalTitle !== ('Add Employee')" [(ngModel)]="employeeToSave.id">
-                </div>
-                <div class="d-flex flex-row" style="min-width: 40px;">
-                    <label for="fieldName" class="flex-grow-1">Name:</label>
-                    <input type="text" id="fieldName" name="fieldName" [value]="this.employeeToSave.name" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.name">
-                </div>
-                <div class="d-flex flex-row" style="min-width: 40px;">
-                    <label for="fieldLogin" class="flex-grow-1">Login:</label>
-                    <input type="text" id="fieldLogin" name="fieldLogin" [value]="this.employeeToSave.login" [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.login">
-                </div>
-                <div class="d-flex flex-row" style="min-width: 40px;">
-                    <label for="fieldSalary" class="flex-grow-1">Salary:</label>
-                    <input type="text" id="fieldSalary" name="fieldSalary" [value]="this.employeeToSave.salary " [disabled]="modalTitle === ('View Employee') || modalTitle === ('Delete Employee') " [(ngModel)]="employeeToSave.salary">
-                </div>
-            </form>
+        </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirm Delete</h5>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you delete this employee?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-          <button *ngIf="modalTitle !== 'Delete Employee'" type="button" class="btn btn-primary" (click)="saveModal(modalTitle)">Save</button>
-          <button *ngIf="modalTitle === 'Delete Employee'" type="button" class="btn btn-danger" (click)="deleteEmployeeModal()">Delete</button>
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmationModal()">Back</button>
+        <button type="button" class="btn btn-primary" (click)="confirmDeleteEmployee()">Yes</button>
         </div>
-      </div>
     </div>
-  </div>
+    </div>
+</div>
 </div>
