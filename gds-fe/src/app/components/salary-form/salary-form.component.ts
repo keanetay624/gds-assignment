@@ -23,10 +23,4 @@ export class SalaryFormComponent {
     }
     this.onSearchSalaryForm.emit(newSalary)
   }
-
-  onFileSelected(event:any) {
-    const file = event.target.files[0];
-    this.employeeService.doUploadEmployees(file).subscribe();
-  }
-
 }
