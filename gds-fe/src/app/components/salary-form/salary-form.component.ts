@@ -11,8 +11,9 @@ import { Salary } from '../../Salary';
 export class SalaryFormComponent {
   @Output() onSearchSalaryForm: EventEmitter<Salary> = new EventEmitter;
   minSal: string = '0';
-  maxSal: string = '999999';
+  maxSal: string = '50000';
   employees: Employee[] = [];
+  hide = true;
 
   constructor(private employeeService: EmployeeService) { }
 
