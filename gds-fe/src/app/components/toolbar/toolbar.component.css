@@ -1,0 +1,9 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+@media only screen and (max-width: 465px){
+  .btn-text {
+    display:none;
+  }
+}
