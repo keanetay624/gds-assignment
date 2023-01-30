@@ -11,6 +11,7 @@ import { EmployeesListComponent } from './components/employees-list/employees-li
 import { NavBtnComponent } from './components/nav-btn/nav-btn.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { SalaryFormComponent } from './components/salary-form/salary-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SalaryFormComponent } from './components/salary-form/salary-form.compon
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
