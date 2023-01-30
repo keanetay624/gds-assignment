@@ -21,7 +21,7 @@ tr {
 }
 
 .page-nav {
-    width:50%;
+    width: 50%;
 }
 
 .main {
@@ -30,4 +30,3 @@ tr {
     min-height: 50%;
     overflow: auto;
 }
-

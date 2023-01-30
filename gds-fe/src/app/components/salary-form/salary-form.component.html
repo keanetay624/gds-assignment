@@ -1,11 +1,21 @@
-<form (ngSubmit)="onSubmit()">
-    <div class="form-control salary-element d-flex">
-        <label for="minSal">Minimum Salary</label>
-        <input type="text" name="minSal" id="minSal" [(ngModel)]="minSal" placeholder="$0.00">
-    </div>
-    <div class="form-control salary-element d-flex">
-        <label for="maxSal">Maximum Salary</label>
-        <input type="text" name="maxSal" id="maxSal" [(ngModel)]="maxSal" placeholder="$999,999.00">
-    </div>
-    <input type="submit" value="Search" class="btn">
-</form>
+<div class="salary-form">
+    <form (ngSubmit)="onSubmit()">
+        <div class="nested">
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Min. Salary</mat-label>
+                <input matInput type="number" class="example-right-align" placeholder="0.00" min="0.00" name="minSal"
+                    id="minSal" [(ngModel)]="minSal">
+                <span matTextPrefix>$&nbsp;</span>
+            </mat-form-field>
+            <mat-form-field appearance="fill" floatLabel="always">
+                <mat-label>Max. Salary</mat-label>
+                <input matInput type="number" class="example-right-align" placeholder="50,000.00" min="0.00"
+                    name="maxSal" id="maxSal" [(ngModel)]="maxSal" class="btn-max-height">
+                <span matTextPrefix>$&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit">Search</button>
+
+    </form>
+</div>
