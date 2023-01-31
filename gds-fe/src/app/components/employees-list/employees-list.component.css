@@ -30,3 +30,11 @@ tr {
     min-height: 50%;
     overflow: auto;
 }
+
+.table-wrapper {
+    margin-top: 5%;
+    padding: 0 5%;
+    width: 100%;
+    overflow-x: auto;
+}
+
