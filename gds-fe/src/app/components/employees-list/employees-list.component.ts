@@ -7,7 +7,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
-import { Sort, MatSort } from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 
 declare var window:any;
 
@@ -63,7 +63,7 @@ export class EmployeesListComponent {
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployeesByParams('0', '999999', '10', '0', "+id").subscribe(
+    this.employeeService.getEmployees('0', '999999', '10', '0', "+id").subscribe(
       (employees) => {(this.employees = employees)
         console.log(this.employees)
         this.sortedData = this.employees;
@@ -96,7 +96,7 @@ export class EmployeesListComponent {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
 
-    this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
         this.employees = employees
@@ -192,7 +192,7 @@ export class EmployeesListComponent {
   }
 
   loadEmployeesPage() {
-    this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString() , this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString() , this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
         this.employees = employees

@@ -13,24 +13,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) {
   }
 
-  getEmployeesByParams(minSalary: string, maxSalary: string,
-    limit: string, offset: string, sort: string): Observable<Employee[]> {
-    return this.http.get<any>(this.apiUrl, {
-      params: new HttpParams()
-        .append('minSalary', minSalary)
-        .append('maxSalary', maxSalary)
-        .append('limit', limit)
-        .append('offset', offset)
-        .append('sort', sort)
-    })
-      .pipe(
-        map((response) => {
-          return response.results;
-        })
-      )
-  }
-
-  getEmployeesBySalary(minSalary: string, maxSalary: string,
+  getEmployees(minSalary: string, maxSalary: string,
     limit: string, offset: string, sort: string): Observable<Employee[]> {
     return this.http.get<any>(this.apiUrl, {
       params: new HttpParams()
