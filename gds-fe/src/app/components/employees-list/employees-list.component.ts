@@ -1,10 +1,12 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../Employee';
 import { Salary } from 'src/app/Salary';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MatPaginator } from '@angular/material/paginator';
+import { tap } from 'rxjs';
 
 declare var window:any;
 
@@ -30,6 +32,9 @@ export class EmployeesListComponent {
 
   @Output() modalTitle = "";
 
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator | undefined;
+
   faImage = faImage;
   faPencil = faPencilAlt;
   faTrash = faTrash;
@@ -41,6 +46,7 @@ export class EmployeesListComponent {
   limit: string = '10';
   offset: string = '0';
   sortStr: string = "+id";
+  displayedColumns: string[] = ['id', 'name', 'login', 'salary'];
 
   formModal:any;
   confirmationModal:any;
@@ -73,6 +79,13 @@ export class EmployeesListComponent {
     );
   }
 
+  ngAfterViewInit(){
+    console.log("after view init")
+    this.paginator?.page.pipe(
+      tap(() => this.loadEmployeesPage())
+    ).subscribe();
+  }
+
   onSortFieldClick(sortField: string) {
     console.log("sorting on: " + sortField);
     console.log("current sortField: " + this.sortField);
@@ -99,28 +112,6 @@ export class EmployeesListComponent {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
 
-    this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
-      (employees) => {
-        this.employees = [];
-        this.employees = employees
-      });
-  }
-
-  getPreviousPage() {
-    if (this.limit > this.offset) return;
-    const offsetNumber = (Number)(this.offset) - (Number)(this.limit);
-    this.offset = offsetNumber.toString();
-    this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
-      (employees) => {
-        this.employees = [];
-        this.employees = employees
-      });
-  }
-
-  getNextPage() {
-    if (this.employees.length < (Number)(this.limit)) return;
-    const offsetNumber = (Number)(this.offset) + (Number)(this.limit);
-    this.offset = offsetNumber.toString();
     this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
@@ -214,5 +205,13 @@ export class EmployeesListComponent {
       salary: ''
     }
     this.openModal(employeeToCreate, 'Add Employee');
+  }
+
+  loadEmployeesPage() {
+    this.employeeService.getEmployeesBySalary(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString() , this.sortStr).subscribe(
+      (employees) => {
+        this.employees = [];
+        this.employees = employees
+      });
   }
 }
