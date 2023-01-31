@@ -3,8 +3,8 @@
     overflow: hidden;
 }
 
-h2 {
-    margin-bottom: 20px;
+.wrapper {
+    display: flex;
 }
 
 tr {
@@ -22,13 +22,6 @@ tr {
 
 .page-nav {
     width: 50%;
-}
-
-.main {
-    width: 70%;
-    max-height: 50%;
-    min-height: 50%;
-    overflow: auto;
 }
 
 .table-wrapper {

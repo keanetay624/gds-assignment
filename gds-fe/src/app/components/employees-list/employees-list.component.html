@@ -1,24 +1,41 @@
 <app-salary-form (onSearchSalaryForm)="searchSalaryForm($event)" />
+<div class="wrapper">
+    <div class="title-employee">
+        <h2>Employees</h2>
+    </div>
+    <div class="title-add-button">
+        <button type="button" class="btn btn-primary" (click)="addEmployee()">Add</button>
+    </div>
+</div>
 <div class="table-wrapper">
-    <table mat-table [dataSource]="employees" class="mat-elevation-z8">
+    <table mat-table [dataSource]="sortedData" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> id </th>
-          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+          <td mat-cell *matCellDef="let element" (click)="openModal(element,'View Employee')"> {{element.id}} </td>
         </ng-container>
       
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element" (click)="openModal(element,'View Employee')"> {{element.name}} </td>
         </ng-container>
       
         <ng-container matColumnDef="login">
-          <th mat-header-cell *matHeaderCellDef> Login </th>
-          <td mat-cell *matCellDef="let element"> {{element.login}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Login </th>
+          <td mat-cell *matCellDef="let element" (click)="openModal(element,'View Employee')"> {{element.login}} </td>
         </ng-container>
     
         <ng-container matColumnDef="salary">
-          <th mat-header-cell *matHeaderCellDef> Salary </th>
-          <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Salary </th>
+          <td mat-cell *matCellDef="let element" (click)="openModal(element,'View Employee')"> {{element.salary}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+            <td mat-cell *matCellDef="let element">
+                <fa-icon [icon]="faPencil" size="1x" class="right-offset"
+                    (click)="openModal(element,'Edit Employee')"></fa-icon>
+                <fa-icon [icon]="faTrash" size="1x" (click)="openModal(element,'Delete Employee')"></fa-icon>
+            </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

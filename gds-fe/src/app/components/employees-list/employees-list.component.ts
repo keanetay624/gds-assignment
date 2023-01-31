@@ -7,6 +7,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
+import { Sort, MatSort } from '@angular/material/sort';
 
 declare var window:any;
 
@@ -46,7 +47,8 @@ export class EmployeesListComponent {
   limit: string = '10';
   offset: string = '0';
   sortStr: string = "+id";
-  displayedColumns: string[] = ['id', 'name', 'login', 'salary'];
+  displayedColumns: string[] = ['id', 'name', 'login', 'salary', 'action'];
+  sortedData: Employee[] = [];
 
   formModal:any;
   confirmationModal:any;
@@ -62,8 +64,13 @@ export class EmployeesListComponent {
 
   ngOnInit(): void {
     this.employeeService.getEmployeesByParams('0', '999999', '10', '0', "+id").subscribe(
-      (employees) => (this.employees = employees)
+      (employees) => {(this.employees = employees)
+        console.log(this.employees)
+        this.sortedData = this.employees;
+      }
     );
+    this.sortedData = this.employees;
+    console.log()
     this.sortAsc = true;
     this.sortField = "id";
     this.sortStr = "+id";
@@ -80,32 +87,9 @@ export class EmployeesListComponent {
   }
 
   ngAfterViewInit(){
-    console.log("after view init")
     this.paginator?.page.pipe(
       tap(() => this.loadEmployeesPage())
     ).subscribe();
-  }
-
-  onSortFieldClick(sortField: string) {
-    console.log("sorting on: " + sortField);
-    console.log("current sortField: " + this.sortField);
-    let sortStr: string;
-
-    if (sortField === this.sortField) {
-      this.sortAsc ? sortStr = "+" + sortField : sortStr = "-" + sortField;
-      this.sortAsc = !this.sortAsc;
-      this.sortStr = sortStr;
-    } else {
-      this.sortAsc ? sortStr = "-" + sortField : sortStr = "+" + sortField;
-      this.sortStr = sortStr;
-    }
-
-    this.sortField = sortField;
-
-    this.employeeService.getEmployeesByParams(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
-      (employees) => (this.employees = employees)
-    );
-
   }
 
   searchSalaryForm(salary: Salary) {
@@ -166,18 +150,18 @@ export class EmployeesListComponent {
   }
 
   saveModal(modalTitle: string) {
-    console.log("Saving employee...", this.employeeToSave)
-
     if (modalTitle === 'Edit Employee') {
       this.employeeService.updateEmployee(this.employeeToSave).subscribe(
         (employees) => {
           this.employees = this.employees.filter(e => e.id != employees[0].id);
           this.employees.push(employees[0]);
+          this.sortedData.push(employees[0]);
         });
     } else {
       this.employeeService.addEmployee(this.employeeToSave).subscribe(
         (employees) => {
           this.employees.push(employees[0]);
+          this.sortedData.push(employees[0]);
         });
     }
     this.closeFormModal();
@@ -189,10 +173,10 @@ export class EmployeesListComponent {
   }
 
   confirmDeleteEmployee() {
-    console.log(this.employeeToDelete)
     this.employeeService.deleteEmployee(this.employeeToDelete).subscribe(
       (employees) => {
         this.employees = this.employees.filter(e => e.id != employees[0].id);
+        this.sortedData = this.sortedData.filter(e => e.id != employees[0].id);
       });
     this.closeConfirmationModal();
   }
@@ -212,6 +196,37 @@ export class EmployeesListComponent {
       (employees) => {
         this.employees = [];
         this.employees = employees
+        this.sortedData = [];
+        this.sortedData = employees;
       });
   }
+ 
+  sortData(sort: Sort) {
+    const data = this.employees.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      
+      switch (sort.active) {
+        case 'name':
+          return compare(a.name, b.name, isAsc);
+        case 'login':
+          return compare(a.login, b.login, isAsc);
+        case 'salary':
+          return compare(a.salary, b.salary, isAsc);
+        case 'id':
+          return compare(a.id, b.id, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
