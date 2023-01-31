@@ -13,4 +13,13 @@ public class ValidatorUtil {
             throw new InvalidSalaryFormatException("Salary must follow double format");
         }
     }
+
+    public static void checkSalaryFormat(String minSalaryString, String maxSalaryString) throws InvalidSalaryFormatException {
+        double minSal = Double.parseDouble(minSalaryString);
+        double maxSal = Double.parseDouble(maxSalaryString);
+
+        if (maxSal < minSal) {
+            throw new InvalidSalaryFormatException("Max salary cannot be less than min salary.");
+        }
+    }
 }

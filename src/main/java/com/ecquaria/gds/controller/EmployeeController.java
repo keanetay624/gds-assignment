@@ -40,6 +40,7 @@ public class EmployeeController {
         try {
             ValidatorUtil.checkSalaryFormat(minSalary);
             ValidatorUtil.checkSalaryFormat(maxSalary);
+            ValidatorUtil.checkSalaryFormat(minSalary, maxSalary);
 
             List<Employee> list = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));

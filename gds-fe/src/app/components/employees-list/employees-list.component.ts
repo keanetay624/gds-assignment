@@ -49,6 +49,7 @@ export class EmployeesListComponent {
   sortStr: string = "+id";
   displayedColumns: string[] = ['id', 'name', 'login', 'salary', 'action'];
   sortedData: Employee[] = [];
+  errorMsg: string = "";
 
   formModal:any;
   confirmationModal:any;
@@ -63,14 +64,15 @@ export class EmployeesListComponent {
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees('0', '999999', '10', '0', "+id").subscribe(
+    this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
       (employees) => {(this.employees = employees)
-        console.log(this.employees)
         this.sortedData = this.employees;
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg =  error.error.message + ": " +  error.error.error;
+        }
       }
     );
-    this.sortedData = this.employees;
-    console.log()
     this.sortAsc = true;
     this.sortField = "id";
     this.sortStr = "+id";
@@ -96,10 +98,17 @@ export class EmployeesListComponent {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
 
-    this.employeeService.getEmployees(this.minSal, this.maxSal, this.limit.toString(), this.offset.toString(), this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), '0', this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
         this.employees = employees
+        this.errorMsg = '';
+        this.sortedData = [];
+        this.sortedData = this.employees;
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg =  error.error.message + ": " +  error.error.error;
+        }
       });
   }
 
@@ -198,9 +207,10 @@ export class EmployeesListComponent {
         this.employees = employees
         this.sortedData = [];
         this.sortedData = employees;
+        this.errorMsg = '';
       });
   }
- 
+
   sortData(sort: Sort) {
     const data = this.employees.slice();
     if (!sort.active || sort.direction === '') {
@@ -210,7 +220,7 @@ export class EmployeesListComponent {
 
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
-      
+
       switch (sort.active) {
         case 'name':
           return compare(a.name, b.name, isAsc);
