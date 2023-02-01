@@ -9,10 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,7 +20,6 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final MongoTemplate mongoTemplate;
 
     public Employee getEmployeeById(String id) {
         return employeeRepository.findEmployeesById(id);
@@ -83,7 +78,7 @@ public class EmployeeService {
         double maxSal = Double.parseDouble(maxSalary);
         pageEmployee = employeeRepository.findEmployeesByCustomSalaryBetween(paging, minSal, maxSal);
 
-        return pageEmployee.getContent();
+        return pageEmployee == null ? new ArrayList<>() : pageEmployee.getContent();
     }
 
     public List<String> isValidSort(String sortValue) {
