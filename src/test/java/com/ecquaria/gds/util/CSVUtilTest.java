@@ -1,5 +1,7 @@
 package com.ecquaria.gds.util;
 
+import com.ecquaria.gds.exception.ColumnMismatchException;
+import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
 import com.ecquaria.gds.exception.InvalidSalaryFormatException;
 import com.ecquaria.gds.model.Employee;
 import org.apache.commons.csv.CSVFormat;
@@ -20,7 +22,7 @@ class CSVUtilTest {
 
     @Test
     @DisplayName("hasCSVFormat should return true if multipartFile has csv extension")
-    public void hasCSVFormatTestOne() throws IOException {
+    public void hasCSVFormatTestOne() {
 
         MultipartFile file = new MultipartFile() {
             @Override
@@ -49,17 +51,17 @@ class CSVUtilTest {
             }
 
             @Override
-            public byte[] getBytes() throws IOException {
+            public byte[] getBytes() {
                 return new byte[0];
             }
 
             @Override
-            public InputStream getInputStream() throws IOException {
+            public InputStream getInputStream() {
                 return null;
             }
 
             @Override
-            public void transferTo(File dest) throws IOException, IllegalStateException {
+            public void transferTo(File dest) throws IllegalStateException {
 
             }
         };
@@ -68,7 +70,7 @@ class CSVUtilTest {
 
     @Test
     @DisplayName("hasCSVFormat should return false if multipartFile does not have csv extension")
-    public void hasCSVFormatTestTwo() throws IOException {
+    public void hasCSVFormatTestTwo() {
 
         MultipartFile file = new MultipartFile() {
             @Override
@@ -97,17 +99,17 @@ class CSVUtilTest {
             }
 
             @Override
-            public byte[] getBytes() throws IOException {
+            public byte[] getBytes() {
                 return new byte[0];
             }
 
             @Override
-            public InputStream getInputStream() throws IOException {
+            public InputStream getInputStream()  {
                 return null;
             }
 
             @Override
-            public void transferTo(File dest) throws IOException, IllegalStateException {
+            public void transferTo(File dest) throws IllegalStateException {
 
             }
         };
@@ -117,7 +119,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isComment should return false if first char of csvRecord is empty")
     public void isCommentTestOne() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testComment1.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testComment1.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -132,7 +134,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isComment should return false if first char of csvRecord is not '#'")
     public void isCommentTestTwo() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testComment2.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testComment2.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -147,7 +149,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isComment should return true if first char of csvRecord is '#'")
     public void isCommentTestThree() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testComment3.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testComment3.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -162,7 +164,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isLessThanFourColumns should return true if any of first 4 csvRecord values are empty")
     public void isLessThanFourColumnsTestOne() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testTooFewColumns.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testTooFewColumns.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -177,7 +179,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isLessThanFourColumns should return false all first 4 columns of csvRecord are not empty")
     public void isLessThanFourColumnsTestTwo() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\test - control.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\test - control.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -192,7 +194,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isMoreThanFourColumns should return true if csvRecord has a size value > 4")
     public void isMoreThanFourColumnsTestOne() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testTooManyColumns.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testTooManyColumns.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -207,7 +209,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("isMoreThanFourColumns should return false if csvRecord has a size value = 4")
     public void isMoreThanFourColumnsTestTwo() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\test - control.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\test - control.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -234,7 +236,7 @@ class CSVUtilTest {
     @DisplayName("isUniqueLoginAndID should return false if id is equal")
     public void isUniqueLoginAndIDTestTwo() {
         Employee e1 = new Employee("1", "test","test", new BigDecimal("3"));
-        Employee e2 = new Employee("1", "testTwo","test", new BigDecimal("3"));
+        Employee e2 = new Employee("1", "testTwo","test2", new BigDecimal("3"));
         List<Employee> employees = new ArrayList<>();
         employees.add(e1);
         assertFalse(CSVUtil.isUniqueLoginAndID(e2, employees));
@@ -244,7 +246,7 @@ class CSVUtilTest {
     @DisplayName("isUniqueLoginAndID should return true if id not equal and login not equal")
     public void isUniqueLoginAndIDTestThree() {
         Employee e1 = new Employee("1", "test","test", new BigDecimal("3"));
-        Employee e2 = new Employee("2", "testTwo","test", new BigDecimal("3"));
+        Employee e2 = new Employee("2", "testTwo","test2", new BigDecimal("3"));
         List<Employee> employees = new ArrayList<>();
         employees.add(e1);
         assertTrue(CSVUtil.isUniqueLoginAndID(e2, employees));
@@ -253,7 +255,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("checkSalaryFormat should return throw invalidSalaryException if salary < 0")
     public void checkSalaryFormatTestOne() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testInvalidSalaryLessThanZero.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testInvalidSalaryLessThanZero.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -268,7 +270,7 @@ class CSVUtilTest {
     @Test
     @DisplayName("checkSalaryFormat should return throw invalidSalaryException if salary < 0")
     public void checkSalaryFormatTestTwo() throws IOException {
-        File testCsvFile = new File("G:\\gds test csv\\testInvalidSalary.csv");
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\testInvalidSalary.csv");
         InputStream is = new FileInputStream(testCsvFile);
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
@@ -280,4 +282,12 @@ class CSVUtilTest {
         }
     }
 
+    @Test
+    @DisplayName("csvToEmployee should return list of employees on success")
+    public void csvToEmployeeTestOne() throws FileNotFoundException, InvalidSalaryFormatException, ColumnMismatchException, DuplicateLoginOrIDException {
+        File testCsvFile = new File("C:\\Users\\ECQ984\\Desktop\\GDS Challenge\\src\\main\\resources\\test - control.csv");
+        InputStream is = new FileInputStream(testCsvFile);
+        List<Employee> eList = CSVUtil.csvToEmployee(is);
+        assertEquals(eList.size(),4);
+    }
 }
