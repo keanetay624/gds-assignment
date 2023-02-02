@@ -200,7 +200,8 @@ If the file passes these validation checks, employees within the file not in the
 
 - [ ] Better UX When Uploading Large CSV Files
 - [ ] UI Localization
-
+- [ ] Testing of Api endpoints with Rest Assured
+- [ ] Testing of frontend with Selenium
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
