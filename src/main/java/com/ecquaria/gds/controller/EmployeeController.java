@@ -1,9 +1,6 @@
 package com.ecquaria.gds.controller;
 
-import com.ecquaria.gds.exception.ColumnMismatchException;
-import com.ecquaria.gds.exception.DuplicateLoginOrIDException;
-import com.ecquaria.gds.exception.InvalidIdException;
-import com.ecquaria.gds.exception.InvalidSalaryFormatException;
+import com.ecquaria.gds.exception.*;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.model.ResponseMessage;
 import com.ecquaria.gds.service.CSVService;
@@ -63,7 +60,7 @@ public class EmployeeController {
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
         } catch (Exception e) {
-            message = "Failed to get employee with id: " + e;
+            message = "Failed to get employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
@@ -84,11 +81,11 @@ public class EmployeeController {
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
         } catch (InvalidIdException | InvalidSalaryFormatException e) {
-            message = "Failed to create employee with id: " + e;
+            message = "Failed to create employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
-            message = "Failed to create employee with id: " + e;
+            message = "Failed to create employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
@@ -106,11 +103,11 @@ public class EmployeeController {
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
         } catch (InvalidIdException e) {
-            message = "Failed to delete employee with id: " + e;
+            message = "Failed to delete employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
-            message = "Failed to delete employee with id: " + e;
+            message = "Failed to delete employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }
@@ -130,12 +127,12 @@ public class EmployeeController {
             List<Employee> list = new ArrayList<>();
             list.add(e);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
-        } catch (InvalidIdException | InvalidSalaryFormatException e) {
-            message = "Failed to update employee with id: " + e;
+        } catch (InvalidIdException | InvalidSalaryFormatException | LoginAlreadyExistsException | MissingRequiredFieldsException e) {
+            message = "Failed to update employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message, error));
         } catch (Exception e) {
-            message = "Failed to update employee with id: " + e;
+            message = "Failed to update employee with id: " + id;
             error = e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message,error));
         }

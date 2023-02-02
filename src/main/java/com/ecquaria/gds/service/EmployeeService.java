@@ -2,6 +2,8 @@ package com.ecquaria.gds.service;
 
 import com.ecquaria.gds.exception.InvalidIdException;
 import com.ecquaria.gds.exception.InvalidSalaryFormatException;
+import com.ecquaria.gds.exception.LoginAlreadyExistsException;
+import com.ecquaria.gds.exception.MissingRequiredFieldsException;
 import com.ecquaria.gds.model.Employee;
 import com.ecquaria.gds.repository.EmployeeRepository;
 import com.ecquaria.gds.util.ValidatorUtil;
@@ -58,12 +60,22 @@ public class EmployeeService {
         return e;
     }
 
-    public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException {
+    public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException,
+            MissingRequiredFieldsException, LoginAlreadyExistsException {
         ValidatorUtil.checkSalaryFormat(salary);
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (!employeeRepository.existsById(id)) {
             throw new InvalidIdException("ID" + id + " does not exist!");
+        }
+
+        if (id.isEmpty() || name.isEmpty() || login.isEmpty() || salary.isEmpty()) {
+            throw new MissingRequiredFieldsException("Missing required fields.");
+        }
+
+        Employee possibleLoginConflictEmployee = employeeRepository.findEmployeeByLogin(login);
+        if (possibleLoginConflictEmployee != null) {
+            throw new LoginAlreadyExistsException("Employee with target login already exists!");
         }
 
         employeeRepository.save(newEmployee);

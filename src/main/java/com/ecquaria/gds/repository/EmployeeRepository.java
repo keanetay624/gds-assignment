@@ -13,6 +13,9 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
     @Query("{_id: '?0'}")
     Employee findEmployeesById(String id);
 
+    @Query("{login: '?0'}")
+    Employee findEmployeeByLogin(String login);
+
     @Query(value = "{'salary':{ $gte: ?0, $lte: ?1}}")
     Page<Employee> findEmployeesByCustomSalaryBetween(Pageable pageable, Double minSal, Double maxSal);
     long count();
