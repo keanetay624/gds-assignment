@@ -14,7 +14,7 @@ export class EmployeeService {
   }
 
   getEmployees(minSalary: string, maxSalary: string,
-    limit: string, offset: string, sort: string): Observable<Employee[]> {
+    limit: string, offset: string, sort: string): Observable<any> {
     return this.http.get<any>(this.apiUrl, {
       params: new HttpParams()
         .append('minSalary', minSalary)
@@ -25,19 +25,22 @@ export class EmployeeService {
     })
       .pipe(
         map((response) => {
-          return response.results;
+          // return response.results;
+          return response;
         })
       )
   }
 
-  doUploadEmployees(file:File): Observable<Employee[]>{
+  doUploadEmployees(file: File): Observable<Employee[]> {
     let formData = new FormData();
     formData.append("reportProgress", 'true');
     formData.append('file', file)
 
     return this.http.post<any>(`${this.apiUrl}/upload`,
-      formData, {headers:new HttpHeaders()
-      .append('Accept', '*/*')})
+      formData, {
+      headers: new HttpHeaders()
+        .append('Accept', '*/*')
+    })
       .pipe(
         map((response) => {
           return response.results;
@@ -45,7 +48,7 @@ export class EmployeeService {
       )
   }
 
-  updateEmployee(employee:Employee): Observable<Employee[]>{
+  updateEmployee(employee: Employee): Observable<Employee[]> {
     let params = new HttpParams()
     params = params.append("name", employee.name)
     params = params.append('login', employee.login)
@@ -59,7 +62,7 @@ export class EmployeeService {
       )
   }
 
-  deleteEmployee(employee:Employee): Observable<Employee[]>{
+  deleteEmployee(employee: Employee): Observable<Employee[]> {
 
     return this.http.delete<any>(`${this.apiUrl}/${employee.id}`)
       .pipe(
@@ -69,7 +72,7 @@ export class EmployeeService {
       )
   }
 
-  addEmployee(employee:Employee): Observable<Employee[]>{
+  addEmployee(employee: Employee): Observable<Employee[]> {
     let params = new HttpParams()
     params = params.append("name", employee.name)
     params = params.append('login', employee.login)

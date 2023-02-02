@@ -10,7 +10,7 @@ import { tap } from 'rxjs';
 import { Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-declare var window:any;
+declare var window: any;
 
 @Component({
   selector: 'app-employees-list',
@@ -18,14 +18,14 @@ declare var window:any;
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent {
-  @Input() employee:Employee = {
+  @Input() employee: Employee = {
     id: '',
     name: '',
     login: '',
     salary: ''
   };
 
-  @Input() employeeToSave:Employee = {
+  @Input() employeeToSave: Employee = {
     id: '',
     name: '',
     login: '',
@@ -53,9 +53,9 @@ export class EmployeesListComponent {
   errorMsg: string = "";
   countEmployeeResults: number = 0;
 
-  formModal:any;
-  confirmationModal:any;
-  employeeToDelete:Employee = {
+  formModal: any;
+  confirmationModal: any;
+  employeeToDelete: Employee = {
     id: '',
     name: '',
     login: '',
@@ -66,13 +66,14 @@ export class EmployeesListComponent {
   constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees('0', '50000', '30', '0', '+id').subscribe(
-      (employees) => {(this.employees = employees)
-        this.sortedData = this.employees;
-        this.countEmployeeResults = this.sortedData.length;
+    this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
+      (employees) => {
+        this.employees = employees.results
+        this.sortedData = employees.results;
+        this.countEmployeeResults = employees.countEmployees;
       }, (error) => {
         if (error && error.error && error.error.message && error.error.error) {
-          this.errorMsg =  error.error.message + ": " +  error.error.error;
+          this.errorMsg = error.error.message + ": " + error.error.error;
           this.snackBar.open(this.errorMsg, 'Dismiss', {
             duration: 3000
           });
@@ -94,7 +95,7 @@ export class EmployeesListComponent {
     );
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.paginator?.page.pipe(
       tap(() => this.loadEmployeesPage())
     ).subscribe();
@@ -103,31 +104,15 @@ export class EmployeesListComponent {
   searchSalaryForm(salary: Salary) {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
-
-    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), '0', this.sortStr).subscribe(
-      (employees) => {
-        this.employees = [];
-        this.employees = employees
-        this.errorMsg = '';
-        this.sortedData = [];
-        this.sortedData = this.employees;
-        this.countEmployeeResults = this.sortedData.length;
-        this.paginator!.pageIndex = 0;
-      }, (error) => {
-        if (error && error.error && error.error.message && error.error.error) {
-          this.errorMsg =  error.error.message + ": " +  error.error.error;
-          this.snackBar.open(this.errorMsg, 'Dismiss', {
-            duration: 3000
-          });
-        }
-      });
+    this.loadEmployeesPage();
+    this.paginator!.firstPage();
   }
 
-  openModal(employee:Employee, action: string){
+  openModal(employee: Employee, action: string) {
     this.modalTitle = action;
     this.formModal.show();
     this.employee = employee;
-    this.employeeToSave = {...this.employee}
+    this.employeeToSave = { ...this.employee }
   }
 
   closeFormModal() {
@@ -176,10 +161,9 @@ export class EmployeesListComponent {
           this.employees = this.employees.filter(e => e.id != employees[0].id);
           this.employees.push(employees[0]);
           this.sortedData.push(employees[0]);
-          this.countEmployeeResults = this.sortedData.length;
         }, (error) => {
           if (error && error.error && error.error.message && error.error.error) {
-            this.errorMsg =  error.error.message + ": " +  error.error.error;
+            this.errorMsg = error.error.message + ": " + error.error.error;
             this.snackBar.open(this.errorMsg, 'Dismiss', {
               duration: 3000
             });
@@ -193,7 +177,7 @@ export class EmployeesListComponent {
           this.countEmployeeResults = this.sortedData.length;
         }, (error) => {
           if (error && error.error && error.error.message && error.error.error) {
-            this.errorMsg =  error.error.message + ": " +  error.error.error;
+            this.errorMsg = error.error.message + ": " + error.error.error;
             this.snackBar.open(this.errorMsg, 'Dismiss', {
               duration: 3000
             });
@@ -213,13 +197,12 @@ export class EmployeesListComponent {
       (employees) => {
         this.employees = this.employees.filter(e => e.id != employees[0].id);
         this.sortedData = this.sortedData.filter(e => e.id != employees[0].id);
-        this.countEmployeeResults = this.sortedData.length;
       });
     this.closeConfirmationModal();
   }
 
   addEmployee() {
-    const employeeToCreate:Employee = {
+    const employeeToCreate: Employee = {
       id: '',
       name: '',
       login: '',
@@ -229,16 +212,22 @@ export class EmployeesListComponent {
   }
 
   loadEmployeesPage() {
-    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString() , this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString(), this.sortStr).subscribe(
       (employees) => {
-        this.employees = [];
-        this.employees = employees
-        this.sortedData = [];
-        this.sortedData = employees;
-        this.errorMsg = '';
-        // this.countEmployeeResults = this.sortedData.length;
+        this.employees = employees.results
+        this.sortedData = employees.results;
+        this.countEmployeeResults = employees.countEmployees;
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg = error.error.message + ": " + error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
+        }
       });
   }
+
+
 
   sortData(sort: Sort) {
     const data = this.employees.slice();
