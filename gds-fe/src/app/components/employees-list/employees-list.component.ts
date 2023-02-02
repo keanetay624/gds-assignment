@@ -51,6 +51,7 @@ export class EmployeesListComponent {
   displayedColumns: string[] = ['id', 'name', 'login', 'salary', 'action'];
   sortedData: Employee[] = [];
   errorMsg: string = "";
+  countEmployeeResults: number = 0;
 
   formModal:any;
   confirmationModal:any;
@@ -68,6 +69,7 @@ export class EmployeesListComponent {
     this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
       (employees) => {(this.employees = employees)
         this.sortedData = this.employees;
+        this.countEmployeeResults = this.sortedData.length;
       }, (error) => {
         if (error && error.error && error.error.message && error.error.error) {
           this.errorMsg =  error.error.message + ": " +  error.error.error;
@@ -102,13 +104,15 @@ export class EmployeesListComponent {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
 
-    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), '0', this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, '30', '0', this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
         this.employees = employees
         this.errorMsg = '';
         this.sortedData = [];
         this.sortedData = this.employees;
+        this.countEmployeeResults = this.sortedData.length;
+        this.paginator!.pageIndex = 0;
       }, (error) => {
         if (error && error.error && error.error.message && error.error.error) {
           this.errorMsg =  error.error.message + ": " +  error.error.error;
@@ -172,12 +176,14 @@ export class EmployeesListComponent {
           this.employees = this.employees.filter(e => e.id != employees[0].id);
           this.employees.push(employees[0]);
           this.sortedData.push(employees[0]);
+          this.countEmployeeResults = this.sortedData.length;
         });
     } else {
       this.employeeService.addEmployee(this.employeeToSave).subscribe(
         (employees) => {
           this.employees.push(employees[0]);
           this.sortedData.push(employees[0]);
+          this.countEmployeeResults = this.sortedData.length;
         });
     }
     this.closeFormModal();
@@ -193,6 +199,7 @@ export class EmployeesListComponent {
       (employees) => {
         this.employees = this.employees.filter(e => e.id != employees[0].id);
         this.sortedData = this.sortedData.filter(e => e.id != employees[0].id);
+        this.countEmployeeResults = this.sortedData.length;
       });
     this.closeConfirmationModal();
   }
@@ -215,6 +222,8 @@ export class EmployeesListComponent {
         this.sortedData = [];
         this.sortedData = employees;
         this.errorMsg = '';
+        this.countEmployeeResults = this.sortedData.length;
+        this.paginator!.pageIndex = 0;
       });
   }
 
