@@ -26,4 +26,10 @@ class ValidatorUtilTest {
         assertThrows(InvalidSalaryFormatException.class,() -> ValidatorUtil.checkSalaryFormat("2","1"));
     }
 
+    @Test
+    @DisplayName("checkSalaryDecimalPlaces should return throw invalidSalaryException if sal > 2 decimal places")
+    void testCheckSalaryDecimalPlaces() {
+        assertThrows(InvalidSalaryFormatException.class,() -> ValidatorUtil.checkSalaryDecimalPlaces("1.023"));
+    }
+
 }
