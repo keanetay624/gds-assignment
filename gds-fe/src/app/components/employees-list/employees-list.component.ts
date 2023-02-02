@@ -66,7 +66,7 @@ export class EmployeesListComponent {
   constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
+    this.employeeService.getEmployees('0', '50000', '30', '0', '+id').subscribe(
       (employees) => {(this.employees = employees)
         this.sortedData = this.employees;
         this.countEmployeeResults = this.sortedData.length;
@@ -104,7 +104,7 @@ export class EmployeesListComponent {
     this.minSal = salary.minSal;
     this.maxSal = salary.maxSal;
 
-    this.employeeService.getEmployees(this.minSal, this.maxSal, '30', '0', this.sortStr).subscribe(
+    this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), '0', this.sortStr).subscribe(
       (employees) => {
         this.employees = [];
         this.employees = employees
@@ -236,8 +236,7 @@ export class EmployeesListComponent {
         this.sortedData = [];
         this.sortedData = employees;
         this.errorMsg = '';
-        this.countEmployeeResults = this.sortedData.length;
-        this.paginator!.pageIndex = 0;
+        // this.countEmployeeResults = this.sortedData.length;
       });
   }
 
