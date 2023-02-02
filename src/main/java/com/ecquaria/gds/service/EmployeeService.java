@@ -26,13 +26,14 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException {
+        ValidatorUtil.checkSalaryFormat(salary);
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (employeeRepository.existsById(id)) {
             throw new InvalidIdException("ID" + id + " already exists!");
         }
 
-        ValidatorUtil.checkSalaryFormat(salary);
+
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
@@ -58,13 +59,13 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(String id, String name, String login, String salary) throws InvalidIdException, InvalidSalaryFormatException {
+        ValidatorUtil.checkSalaryFormat(salary);
         Employee newEmployee = new Employee(id, name, login, new BigDecimal(salary));
 
         if (!employeeRepository.existsById(id)) {
             throw new InvalidIdException("ID" + id + " does not exist!");
         }
 
-        ValidatorUtil.checkSalaryFormat(salary);
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
