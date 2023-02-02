@@ -8,6 +8,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
 import { Sort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var window:any;
 
@@ -61,7 +62,7 @@ export class EmployeesListComponent {
   };
 
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
@@ -70,6 +71,9 @@ export class EmployeesListComponent {
       }, (error) => {
         if (error && error.error && error.error.message && error.error.error) {
           this.errorMsg =  error.error.message + ": " +  error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
         }
       }
     );
@@ -108,6 +112,9 @@ export class EmployeesListComponent {
       }, (error) => {
         if (error && error.error && error.error.message && error.error.error) {
           this.errorMsg =  error.error.message + ": " +  error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
         }
       });
   }
