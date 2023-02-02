@@ -177,6 +177,13 @@ export class EmployeesListComponent {
           this.employees.push(employees[0]);
           this.sortedData.push(employees[0]);
           this.countEmployeeResults = this.sortedData.length;
+        }, (error) => {
+          if (error && error.error && error.error.message && error.error.error) {
+            this.errorMsg =  error.error.message + ": " +  error.error.error;
+            this.snackBar.open(this.errorMsg, 'Dismiss', {
+              duration: 3000
+            });
+          }
         });
     } else {
       this.employeeService.addEmployee(this.employeeToSave).subscribe(
@@ -184,6 +191,13 @@ export class EmployeesListComponent {
           this.employees.push(employees[0]);
           this.sortedData.push(employees[0]);
           this.countEmployeeResults = this.sortedData.length;
+        }, (error) => {
+          if (error && error.error && error.error.message && error.error.error) {
+            this.errorMsg =  error.error.message + ": " +  error.error.error;
+            this.snackBar.open(this.errorMsg, 'Dismiss', {
+              duration: 3000
+            });
+          }
         });
     }
     this.closeFormModal();
