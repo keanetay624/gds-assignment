@@ -92,7 +92,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="closeFormModal()">Close</button>
-                <button *ngIf="modalTitle !== 'Delete Employee'" type="button" class="btn btn-primary"
+                <button *ngIf="modalTitle === 'Edit Employee'" type="button" class="btn btn-primary"
                     (click)="saveModal(modalTitle)">Save</button>
                 <button *ngIf="modalTitle === 'Delete Employee'" type="button" class="btn btn-danger"
                     (click)="deleteEmployeeModal()">Delete</button>
