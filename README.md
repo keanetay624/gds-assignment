@@ -142,8 +142,8 @@ To add an employee, click on the Add button above the employees table. Note the 
 
 If the employee to insert passes these validation rules, it will be added to the database after clicking the Save button. To cancel this employee insertion, click on Close.
 
-[![Add Employee Button][add-employee-button]]<br/>
-[![Add Employee Screenshot][add-employee]]
+![Add Employee Button][add-employee-button]<br/>
+![Add Employee Screenshot][add-employee]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
