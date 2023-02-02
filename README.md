@@ -131,7 +131,19 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Adding an Employee
+To add an employee, click on the Add button above the employees table. Note the following rules for successful employee insertion:
+- All fields are required.
+- id and login must be unique.
+- salary must follow currency format:
+  - only numeric characters allowed
+  - only up to 2 decimal places allowed
+  - only one decimal point is allowed
+
+If the employee to insert passes these validation rules, it will be added to the database after clicking the Save button. To cancel this employee insertion, click on Close.
+
+[![Add Employee Button][add-employee-button]]<br/>
+[![Add Employee Screenshot][add-employee]]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -174,6 +186,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[add-employee-button]: images/add-button.png
+[add-employee]: images/add-employee.PNG
 [product-screenshot]: images/app.PNG
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
