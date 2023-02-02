@@ -12,15 +12,18 @@
 <br />
 <div align="center">
   <a href="https://github.com/keanetay624/gds-assignment">
-    <img src="./images/money-bill-solid.svg" alt="Logo" width="80" height="80">
+  <picture>
+    <source media="(prefers-color-scheme: dark)"  alt="Logo" srcset="./images/money-bill-solid-light.png" width="80" height="80">
+    <img src="./images/money-bill-solid-dark.svg" alt="Logo" width="80" height="80">
+  </picture>
   </a>
+  </div>
 
-<h3 align="center">Salary Management</h3>
+<h3 align="center">Employee Salary Management</h3>
 
   <p align="center">
-    A simple proof-of-concept web application for GDS assignment
+    Web application designed to make managing employee salaries for Human Resources simple, fun and easy to use.
   </p>
-</div>
 
 
 
@@ -55,7 +58,8 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+The Human Resources department requires a webapp to manage employee salaries. They require a responsive, mobile-first experience
+to view, edit and delete existing employee salary details. The app features a file upload feature so users can easily upload a list of employees for batch update or insert.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -83,11 +87,12 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
   <a>https://nodejs.org/en/download/</a>
 * Docker<br/>
   <a>https://www.docker.com/products/docker-desktop/</a>
+* Jetbrains IntelliJ IDEA - for running spring boot and docker-compose<br/>
+  <a>https://www.jetbrains.com/idea/download/#section=windows</a>
 * Angular - after installing node<br/>
   ```sh
   npm install -g @angular/cli
   ```
-
 ### Installation
 
 1. Clone the repo
@@ -98,6 +103,27 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
    ```sh
    npm install
    ```
+
+### Starting the Application
+
+1. Startup database containers
+   - Two services in docker-compose.yaml need to be started to activate the database.
+   - This can be easily achieved by clicking docker-compose up within an IDE like Jetbrains IntelliJ IDEA.
+2. Start Spring Boot application
+    - Navigate to /src/main/java/com.ecquaria.gds/GdsApplication
+    - Click on Run Spring Boot Application.
+3. Start Angular application
+    - Navigate to /gds-fe/
+    - Open up a cmd shell from this path
+    - Run the angular command for starting the application
+     ```sh
+   ng serve
+   ```
+4. Access the application frontend
+    - Open your web browser of choice and navigate to localhost:4200.
+    - The application is now ready for use. 
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -114,12 +140,8 @@ Use this space to show useful examples of how a project can be used. Additional 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+- [ ] Better UX When Uploading Large CSV Files
+- [ ] UI Localization
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,7 +166,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Keane Tay - [@twitter_handle](https://twitter.com/twitter_handle) - keanetay@ecquaria.com
+Keane Tay - keanetay@ecquaria.com
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/keanetay624/gds-assignment)
 
@@ -152,6 +174,6 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/APP.png
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
