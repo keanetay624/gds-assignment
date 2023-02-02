@@ -78,7 +78,9 @@ public class CSVUtil {
     public static void checkSalaryFormat(CSVRecord csvRecord) throws InvalidSalaryFormatException {
         try {
             String toEvaluate = csvRecord.get(3);
-            Double salary = Double.parseDouble(toEvaluate);
+            ValidatorUtil.checkSalaryDecimalPlaces(toEvaluate);
+            double salary = Double.parseDouble(toEvaluate);
+
             if (salary < 0) {
                 throw new InvalidSalaryFormatException("Salary cannot be less than zero.");
             }
