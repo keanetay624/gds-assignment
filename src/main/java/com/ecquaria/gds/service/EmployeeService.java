@@ -82,7 +82,7 @@ public class EmployeeService {
         return newEmployee;
     }
 
-    public List<Employee> getEmployeesByParams(String minSalary, String maxSalary,
+    public Page<Employee> getEmployeesByParams(String minSalary, String maxSalary,
                                                String limit, String offset,String sort) {
         Pageable paging = PageRequest.of(Integer.parseInt(offset), Integer.parseInt(limit));
 
@@ -91,7 +91,7 @@ public class EmployeeService {
         double maxSal = Double.parseDouble(maxSalary);
         pageEmployee = employeeRepository.findEmployeesByCustomSalaryBetween(paging, minSal, maxSal);
 
-        return pageEmployee == null ? new ArrayList<>() : pageEmployee.getContent();
+        return pageEmployee;
     }
 
     public List<String> isValidSort(String sortValue) {

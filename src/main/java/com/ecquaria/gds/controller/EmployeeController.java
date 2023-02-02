@@ -9,6 +9,7 @@ import com.ecquaria.gds.util.CSVUtil;
 import com.ecquaria.gds.util.ValidatorUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,17 @@ public class EmployeeController {
             ValidatorUtil.checkSalaryFormat(minSalary);
             ValidatorUtil.checkSalaryFormat(maxSalary);
             ValidatorUtil.checkSalaryFormat(minSalary, maxSalary);
+            List<Employee> list = new ArrayList<>();
+            long totalFilteredEmployees = 0;
 
-            List<Employee> list = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+            Page<Employee> employeePage = employeeService.getEmployeesByParams(minSalary, maxSalary, limit, offset, sort);
+
+            if (employeePage != null) {
+                list = employeePage.getContent();
+                totalFilteredEmployees = employeePage.getTotalElements();
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", totalFilteredEmployees, list));
         } catch (InvalidSalaryFormatException e) {
             message = "Invalid Salary Format";
             error = e.getMessage();
@@ -58,7 +67,7 @@ public class EmployeeController {
             Employee e = employeeService.getEmployeeById(id);
             List<Employee> list = new ArrayList<>();
             list.add(e);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","",list.size(), list));
         } catch (Exception e) {
             message = "Failed to get employee with id: " + id;
             error = e.getMessage();
@@ -79,7 +88,7 @@ public class EmployeeController {
             Employee e = employeeService.addEmployee(id, name, login, salary);
             List<Employee> list = new ArrayList<>();
             list.add(e);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","",list.size(), list));
         } catch (InvalidIdException | InvalidSalaryFormatException e) {
             message = "Failed to create employee with id: " + id;
             error = e.getMessage();
@@ -101,7 +110,7 @@ public class EmployeeController {
             Employee e = employeeService.deleteEmployee(id);
             List<Employee> list = new ArrayList<>();
             list.add(e);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list.size(), list));
         } catch (InvalidIdException e) {
             message = "Failed to delete employee with id: " + id;
             error = e.getMessage();
@@ -126,7 +135,7 @@ public class EmployeeController {
             Employee e = employeeService.updateEmployee(id, name, login, salary);
             List<Employee> list = new ArrayList<>();
             list.add(e);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("","", list.size(), list));
         } catch (InvalidIdException | InvalidSalaryFormatException | LoginAlreadyExistsException | MissingRequiredFieldsException e) {
             message = "Failed to update employee with id: " + id;
             error = e.getMessage();

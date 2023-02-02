@@ -12,6 +12,7 @@ import java.util.List;
 public class ResponseMessage {
     private String message;
     private String error;
+    private long countEmployees;
     private List<Employee> results;
 
     public ResponseMessage(String message, String error) {
