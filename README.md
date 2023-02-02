@@ -130,6 +130,16 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+### Filtering Employees by Salary
+To filter employees by salary range, enter minimum and maximum salary in the form above. On search button press or on enter keydown, the employees list will be filtered and refreshed in the table below.
+
+![Filter Employee Screenshot][filter-employee]<br/>
+### Viewing an Employee
+To view details for a specific employee, click on any field in the employee record. A dialog will open with employee information. Data is not-editable in this dialog. 
+
+![View Employee Button][view-employee-button]<br/>
+![View Employee Screenshot][view-employee]
+
 
 ### Adding an Employee
 To add an employee, click on the Add button above the employees table. Note the following rules for successful employee insertion:
@@ -144,6 +154,42 @@ If the employee to insert passes these validation rules, it will be added to the
 
 ![Add Employee Button][add-employee-button]<br/>
 ![Add Employee Screenshot][add-employee]
+
+### Editing an Employee
+To edit an employee, click on the Edit button above the employees table. Note that the id is a non-editable field. Additionally, there is some validation for successful editing of existing employee:
+- All fields are required.
+- Login must be unique.
+- salary must follow currency format:
+  - only numeric characters allowed
+  - only up to 2 decimal places allowed
+  - only one decimal point is allowed
+
+If the employee to edit passes these validation rules, it's record in the database will be updated after clicking the Save button. To cancel this action, click on Close.
+
+![Edit Employee Button][edit-employee-button]<br/>
+![Edit Employee Screenshot][edit-employee]
+
+### Delete an Employee
+To delete an employee, click on the Delete button in the action column. 
+A confirmation dialog will open. The selected employee will be deleted once the user confirms this action.
+
+![Delete Employee Button][delete-employee-button]<br/>
+![Delete Employee Screenshot][delete-employee]
+
+### Uploading employee data in .csv file format
+To batch insert or update employees within a csv file format, click on upload button on the navbar. 
+For successful file upload, the following validation criteria is required to pass:
+- First record is header information, and will be ignored
+- Required columns are in this order: id, name, login, salary
+- Duplicate id or logins are not permitted within the same .csv file.
+- salary must follow currency format:
+  - only numeric characters allowed
+  - only up to 2 decimal places allowed
+  - only one decimal point is allowed
+
+If the file passes these validation checks, employees within the file not in the system will be inserted, and existing employee information will be updated. 
+
+![Upload Employee Screenshot][upload-employee]<br/>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -186,8 +232,16 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[filter-employee]: images/filter-employee.PNG
+[view-employee-button]: images/view-button.png
+[view-employee]: images/view-employee.PNG
 [add-employee-button]: images/add-button.png
 [add-employee]: images/add-employee.PNG
+[delete-employee-button]: images/delete-button.png
+[delete-employee]: images/delete-employee.PNG
+[edit-employee-button]: images/edit-button.png
+[edit-employee]: images/edit-employee.PNG
+[upload-employee]: images/upload-employee.PNG
 [product-screenshot]: images/app.PNG
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
