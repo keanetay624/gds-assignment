@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export interface ResponseData {
   message: string
@@ -12,9 +13,22 @@ export interface ResponseData {
 })
 export class AppComponent {
   title: string = $localize`Employee Salary Management`;
+  responseData: ResponseData = {
+    message: '',
+    error: ''
+  };
+
+  eventsSubject: Subject<ResponseData> = new Subject<ResponseData>();
 
   updateEmployeesTable(responseData: ResponseData) {
     console.log('from app component')
     console.log(responseData)
+    this.responseData = responseData;
+    this.emitEventToChild();
   }
+
+  emitEventToChild() {
+    this.eventsSubject.next(this.responseData);
+  }
+
 }

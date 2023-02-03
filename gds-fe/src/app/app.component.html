@@ -1,2 +1,2 @@
 <app-toolbar (onUpload)="updateEmployeesTable($event)" />
-<app-employees-table />
+<app-employees-table [events]="eventsSubject.asObservable()" />

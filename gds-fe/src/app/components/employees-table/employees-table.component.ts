@@ -8,12 +8,13 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
-import { tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { ResponseData } from '../toolbar/toolbar.component';
 
 declare var window: any;
 
@@ -29,6 +30,8 @@ export class EmployeesTableComponent {
     login: '',
     salary: ''
   };
+
+  @Input() responseData: ResponseData | undefined;
 
   @Output() modalTitle = "";
 
@@ -52,6 +55,10 @@ export class EmployeesTableComponent {
   sortedData: Employee[] = [];
   errorMsg: string = "";
   countEmployeeResults: number = 0;
+  //@ts-ignore
+  @Input() events: Observable<ResponseData>;
+  //@ts-ignore
+  private eventsSubscription: Subscription;
 
   constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
 
@@ -70,6 +77,18 @@ export class EmployeesTableComponent {
         }
       }
     );
+    this.eventsSubscription = this.events.subscribe((responseData) => {
+      if (responseData.message) {
+        this.snackBar.open(responseData.message, 'Dismiss', {
+          duration: 3000
+        });
+      } else {
+        this.snackBar.open(responseData.error, 'Dismiss', {
+          duration: 3000
+        });
+      }
+      this.loadEmployeesPage()
+    });
     this.sortAsc = true;
     this.sortField = "id";
     this.sortStr = "+id";
@@ -147,7 +166,6 @@ export class EmployeesTableComponent {
           login: result.login,
           salary: result.salary
         }
-        console.log("result", result)
 
         if (result.isDelete) {
           console.log("deleting employee: ", saveEmployee);
