@@ -28,8 +28,8 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
-    <button *ngIf="data.modalTitle === 'Edit Employee' || data.modalTitle === 'Add Employee'" mat-button
-        [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button *ngIf="data.isUpdate" mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button *ngIf="data.isAdd" mat-button [mat-dialog-close]="data" cdkFocusInitial>Add</button>
     <button *ngIf="data.modalTitle === 'Delete Employee'" mat-button [mat-dialog-close]="data"
         cdkFocusInitial>Delete</button>
 </div>
