@@ -1,12 +1,12 @@
- <mat-toolbar color="primary">
-    <span>Salary Management</span>
-    <span class="example-spacer"></span>
-   <div (click)="uploadFile.click()">
-     <button mat-raised-button aria-label="Upload button with paperclip icon" color="accent">
-       <span class="btn-text">Upload File (.csv)</span>
-       <mat-icon>attach_file</mat-icon>
-     </button>
-     <input #uploadFile (change)="onFileSelected($event)" type='file' style="display:none"/>
-   </div>
+<mat-toolbar color="primary">
+  <span i18n>Salary Management</span>
+  <span class="example-spacer"></span>
+  <div (click)="uploadFile.click()">
+    <button mat-raised-button aria-label="Upload button with paperclip icon" color="accent">
+      <span class="btn-text" i18n>Upload File (.csv)</span>
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <input #uploadFile (change)="onFileSelected($event)" type='file' style="display:none" />
+  </div>
 
 </mat-toolbar>
