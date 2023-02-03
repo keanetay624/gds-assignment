@@ -56,7 +56,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<p align="center" width="100%">
+    <img width="60%" src="images/app.PNG"> 
+</p>
 
 The Human Resources department requires a webapp to manage employee salaries. They require a responsive, mobile-first experience
 to view, edit and delete existing employee salary details. The app features a file upload feature so users can easily upload a list of employees for batch update or insert.
@@ -130,20 +132,21 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 ### Filtering Employees by Salary
 To filter employees by salary range, enter minimum and maximum salary in the form above. On search button press or on enter keydown, the employees list will be filtered and refreshed in the table below.
 
-![Filter Employee Screenshot][filter-employee]<br/>
+<p align="center" width="100%">
+    <img width="60%" src="images/filter-employee.PNG"> 
+</p>
 ### Viewing an Employee
 To view details for a specific employee, click on any field in the employee record. A dialog will open with employee information. Data is not-editable in this dialog. 
 
-![View Employee Button][view-employee-button]<br/>
-![View Employee Screenshot][view-employee]
-
+<p align="center" width="100%">
+    <img width="60%" src="images/view-button.png"> 
+    <img width="60%" src="images/view-employee.PNG"> 
+</p>
 
 ### Adding an Employee
 To add an employee, click on the Add button above the employees table. Note the following rules for successful employee insertion:
@@ -156,8 +159,10 @@ To add an employee, click on the Add button above the employees table. Note the 
 
 If the employee to insert passes these validation rules, it will be added to the database after clicking the Save button. To cancel this employee insertion, click on Close.
 
-![Add Employee Button][add-employee-button]<br/>
-![Add Employee Screenshot][add-employee]
+<p align="center" width="100%">
+    <img width="60%" src="images/add-button.png"> 
+    <img width="60%" src="images/add-employee.PNG"> 
+</p>
 
 ### Editing an Employee
 To edit an employee, click on the Edit button above the employees table. Note that the id is a non-editable field. Additionally, there is some validation for successful editing of existing employee:
@@ -170,15 +175,19 @@ To edit an employee, click on the Edit button above the employees table. Note th
 
 If the employee to edit passes these validation rules, it's record in the database will be updated after clicking the Save button. To cancel this action, click on Close.
 
-![Edit Employee Button][edit-employee-button]<br/>
-![Edit Employee Screenshot][edit-employee]
+<p align="center" width="100%">
+    <img width="60%" src="images/edit-button.png"> 
+    <img width="60%" src="images/edit-employee.PNG"> 
+</p>
 
 ### Delete an Employee
 To delete an employee, click on the Delete button in the action column. 
 A confirmation dialog will open. The selected employee will be deleted once the user confirms this action.
 
-![Delete Employee Button][delete-employee-button]<br/>
-![Delete Employee Screenshot][delete-employee]
+<p align="center" width="100%">
+    <img width="60%" src="images/delete-button.png"> 
+    <img width="60%" src="images/delete-employee.PNG"> 
+</p>
 
 ### Uploading employee data in .csv file format
 To batch insert or update employees within a csv file format, click on upload button on the navbar. 
@@ -193,7 +202,9 @@ For successful file upload, the following validation criteria is required to pas
 
 If the file passes these validation checks, employees within the file not in the system will be inserted, and existing employee information will be updated. 
 
-![Upload Employee Screenshot][upload-employee]<br/>
+<p align="center" width="100%">
+    <img width="60%" src="images/upload-employee.PNG"> 
+</p>
 
 ### Internationalization (i18n)
 The application has been internationalized and is ready to be localized.
@@ -215,8 +226,10 @@ To test the localized application, navigate to the gds/fe
 This will take you to the version of the application localized to Chinese language. 
 To see the default version of the app in English, click on back, and select en-SG.
 
-![Localized Screenshot][localized-cn]<br/>
-![Localized Screenshot][localized-sg]<br/>
+<p align="center" width="100%">
+    <img width="33%" src="images/localization-cn.JPG"> 
+    <img width="33%" src="images/localization-en.JPG"> 
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -260,18 +273,5 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[filter-employee]: images/filter-employee.PNG
-[view-employee-button]: images/view-button.png
-[view-employee]: images/view-employee.PNG
-[add-employee-button]: images/add-button.png
-[add-employee]: images/add-employee.PNG
-[delete-employee-button]: images/delete-button.png
-[delete-employee]: images/delete-employee.PNG
-[edit-employee-button]: images/edit-button.png
-[edit-employee]: images/edit-employee.PNG
-[upload-employee]: images/upload-employee.PNG
-[product-screenshot]: images/app.PNG
-[localized-cn]: images/localization-cn.JPG
-[localized-sg]: images/localization-en.JPG
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
