@@ -31,7 +31,7 @@ export class EmployeeService {
       )
   }
 
-  doUploadEmployees(file: File): Observable<Employee[]> {
+  doUploadEmployees(file: File): Observable<any> {
     let formData = new FormData();
     formData.append("reportProgress", 'true');
     formData.append('file', file)
@@ -43,7 +43,7 @@ export class EmployeeService {
     })
       .pipe(
         map((response) => {
-          return response.results;
+          return response;
         })
       )
   }
