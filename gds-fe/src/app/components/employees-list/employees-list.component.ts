@@ -216,6 +216,12 @@ export class EmployeesListComponent {
   }
 
   loadEmployeesPage() {
+    if (this.minSal === null) {
+      this.minSal = '0'
+    }
+    if (this.maxSal === null) {
+      this.maxSal = '50000'
+    }
     this.employeeService.getEmployees(this.minSal, this.maxSal, this.paginator!.pageSize.toString(), this.paginator!.pageIndex.toString(), this.sortStr).subscribe(
       (employees) => {
         this.employees = employees.results
