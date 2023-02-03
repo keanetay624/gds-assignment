@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -86,7 +87,7 @@ public class EmployeeService {
 
     public Page<Employee> getEmployeesByParams(String minSalary, String maxSalary,
                                                String limit, String offset,String sort) {
-        Pageable paging = PageRequest.of(Integer.parseInt(offset), Integer.parseInt(limit));
+        Pageable paging = PageRequest.of(Integer.parseInt(offset), Integer.parseInt(limit), Sort.by(getSortDirection(sort),sort.substring(1)));
 
         Page<Employee> pageEmployee;
         double minSal = Double.parseDouble(minSalary);
@@ -96,17 +97,8 @@ public class EmployeeService {
         return pageEmployee;
     }
 
-    public List<String> isValidSort(String sortValue) {
-        List<String> strList = new ArrayList<>();
-        if (sortValue.charAt(0) == '+') {
-            strList.add("ASC");
-        } else if (sortValue.charAt(0) == '-') {
-            strList.add("DESC");
-        } else {
-            return strList;
-        }
-
-        strList.add(sortValue.substring(1));
-        return strList;
+    public Sort.Direction getSortDirection(String sort) {
+        if (sort.charAt(0) == '+') return Sort.Direction.ASC;
+        return Sort.Direction.DESC;
     }
 }

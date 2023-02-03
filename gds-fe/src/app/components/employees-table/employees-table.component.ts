@@ -115,29 +115,13 @@ export class EmployeesTableComponent {
   }
 
   sortData(sort: Sort) {
-    const data = this.employees.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
-
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-
-      switch (sort.active) {
-        case 'name':
-          return compare(a.name, b.name, isAsc);
-        case 'login':
-          return compare(a.login, b.login, isAsc);
-        case 'salary':
-          return compare(a.salary, b.salary, isAsc);
-        case 'id':
-          return compare(a.id, b.id, isAsc);
-        default:
-          return 0;
-      }
-    });
+    let newSortStr = ""
+    newSortStr += sort.direction === "asc" ? "+" : "-";
+    newSortStr += sort.active;
+    this.sortStr = newSortStr;
+    this.loadEmployeesPage();
   }
+
   openDialog(employee: Employee, modalTitle: string): void {
     const dialogRef = this.dialog.open(ModalComponent, {
       data: {
@@ -196,6 +180,7 @@ export class EmployeesTableComponent {
           });
         }
       });
+    this.loadEmployeesPage();
   }
 
   deleteEmployee(employee: Employee) {
@@ -211,6 +196,7 @@ export class EmployeesTableComponent {
           });
         }
       });
+    this.loadEmployeesPage();
   }
 
   addEmployee(employee: Employee) {
@@ -227,6 +213,7 @@ export class EmployeesTableComponent {
           });
         }
       });
+    this.loadEmployeesPage();
   }
 }
 
