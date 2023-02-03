@@ -5,6 +5,7 @@ import { Salary } from 'src/app/Salary';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
 import { Sort } from '@angular/material/sort';
@@ -40,6 +41,7 @@ export class EmployeesListComponent {
   faImage = faImage;
   faPencil = faPencilAlt;
   faTrash = faTrash;
+  faUser = faUser;
   employees: Employee[] = [];
   sortAsc: boolean = true;
   sortField: string = "id";
