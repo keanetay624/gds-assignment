@@ -74,7 +74,9 @@ public class EmployeeService {
         }
 
         Employee possibleLoginConflictEmployee = employeeRepository.findEmployeeByLogin(login);
-        if (possibleLoginConflictEmployee != null) {
+        Employee targetEmployeeForUpdate =  employeeRepository.findEmployeesById(id);
+
+        if (possibleLoginConflictEmployee != null && !possibleLoginConflictEmployee.equals(targetEmployeeForUpdate)) {
             throw new LoginAlreadyExistsException("Employee with target login already exists!");
         }
 
