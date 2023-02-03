@@ -138,11 +138,20 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
 <!-- USAGE EXAMPLES -->
 ## Usage
 ### Filtering Employees by Salary
-To filter employees by salary range, enter minimum and maximum salary in the form above. On search button press or on enter keydown, the employees list will be filtered and refreshed in the table below.
+To filter employees by salary range, enter minimum and maximum salary in the form above. The filtering happens automatically
+after the user provides a minimum and maximum salary, and will trigger a refresh of the list of employees below.
 
 <p align="center" width="100%">
     <img width="60%" src="images/filter-employee.PNG"> 
 </p>
+
+Note that there is also output for unsuccessful data retrieval due to invalid user input, such as negative values for salary,
+and minimum salary greater than max salary.
+<p align="center" width="100%">
+    <img width="50%" src="images/filter-employee-valid.PNG">
+    <img width="50%" src="images/filter-employee-valid2.PNG"> 
+</p>
+
 ### Viewing an Employee
 To view details for a specific employee, click on any field in the employee record. A dialog will open with employee information. Data is not-editable in this dialog. 
 
@@ -224,7 +233,13 @@ To test the localized application, navigate to the gds/fe
    ```
 3. Open a web browser of choice, and access the url to the local web server.
 4. Open EmployeeController.java, and update the origins url for the url of the local web server.
+<p align="center" width="100%">
+    <img width="33%" src="images/cors.PNG"> 
+</p>
 5. Select zh from the index-menu.
+<p align="center" width="100%">
+    <img width="33%" src="images/local-index.PNG"> 
+</p>
 
 This will take you to the version of the application localized to Chinese language. 
 To see the default version of the app in English, click on back, and select en-SG.
