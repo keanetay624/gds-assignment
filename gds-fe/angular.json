@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "gds-fe": {
+      "i18n": {
+        "sourceLocale": "en-SG",
+        "locales": {
+          "zh-CN": "/src/locale/messages.zh.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,6 +19,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": [
+              "zh-CN"
+            ],
             "outputPath": "dist/gds-fe",
             "index": "src/index.html",
             "main": "src/main.ts",
