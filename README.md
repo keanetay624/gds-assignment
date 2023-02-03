@@ -212,7 +212,7 @@ For successful file upload, the following validation criteria is required to pas
   - only up to 2 decimal places allowed
   - only one decimal point is allowed
 
-If the file passes these validation checks, employees within the file not in the system will be inserted, and existing employee information will be updated. 
+If the file passes these validation checks, employees within the file not in the system will be inserted, and existing employee information will be updated. Just like for salary filtering, a snackbar notification will popup after file upload to show success or failure message.
 
 <p align="center" width="100%">
     <img width="60%" src="images/upload-employee.PNG"> 
