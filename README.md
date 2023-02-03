@@ -270,7 +270,7 @@ Don't forget to give the project a star! Thanks again!
 
 Keane Tay - keanetay@ecquaria.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/keanetay624/gds-assignment)
+Project Link: https://github.com/keanetay624/gds-assignment
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
