@@ -69,6 +69,9 @@ to view, edit and delete existing employee salary details. The app features a fi
 
 ### Built With
 
+This project is built with Java Spring Boot, Angular and MongoDB.
+JUnit5 and Mockito are used for testing on the backend.
+
 * [![Angular][Angular.io]][Angular-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
