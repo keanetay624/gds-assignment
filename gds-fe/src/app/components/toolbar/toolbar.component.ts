@@ -25,7 +25,6 @@ export class ToolbarComponent {
           message: response.message,
           error: ''
         }
-        console.log('before emit success')
         this.onUpload.emit(responseData)
       }, (error) => {
         if (error && error.error) {
@@ -33,7 +32,6 @@ export class ToolbarComponent {
             message: '',
             error: error.error.message + ": " + error.error.error
           }
-          console.log('before emit failure')
           this.onUpload.emit(responseData)
         }
       }

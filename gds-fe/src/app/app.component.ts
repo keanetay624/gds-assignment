@@ -21,8 +21,6 @@ export class AppComponent {
   eventsSubject: Subject<ResponseData> = new Subject<ResponseData>();
 
   updateEmployeesTable(responseData: ResponseData) {
-    console.log('from app component')
-    console.log(responseData)
     this.responseData = responseData;
     this.emitEventToChild();
   }
