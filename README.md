@@ -93,6 +93,10 @@ To get the project running, you will need JDK (17), Node, Angular (15.1) and Doc
   ```sh
   npm install -g @angular/cli
   ```
+* Http server - for testing localization<br/>
+  ```sh
+  npm install http-server -g
+  ```
 ### Installation
 
 1. Clone the repo
@@ -191,6 +195,28 @@ If the file passes these validation checks, employees within the file not in the
 
 ![Upload Employee Screenshot][upload-employee]<br/>
 
+### Internationalization (i18n)
+The application has been internationalized and is ready to be localized.
+As a proof-of-concept, the only locales currently supported are en-SG and zh (chinese).
+To test the localized application, navigate to the gds/fe
+
+1. Build the localized application
+```sh
+   ng-build --localize
+   ```
+2. Startup http server to serve the app locally.
+```sh
+   http-server ./dist/gds-fe
+   ```
+3. Open a web browser of choice, and access the url to the local web server.
+4. Select zh from the index-menu.
+
+This will take you to the version of the application localized to Chinese language. 
+To see the default version of the app in English, click on back, and select en-SG.
+
+![Localized Screenshot][localized-cn]<br/>
+![Localized Screenshot][localized-sg]<br/>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -198,8 +224,8 @@ If the file passes these validation checks, employees within the file not in the
 <!-- ROADMAP -->
 ## Roadmap
 
+- [x] UI Localization
 - [ ] Better UX When Uploading Large CSV Files
-- [ ] UI Localization
 - [ ] Testing of Api endpoints with Rest Assured
 - [ ] Testing of frontend with Selenium
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -244,5 +270,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [edit-employee]: images/edit-employee.PNG
 [upload-employee]: images/upload-employee.PNG
 [product-screenshot]: images/app.PNG
+[localized-cn]: images/localization-cn.JPG
+[localized-sg]: images/localization-en.JPG
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/

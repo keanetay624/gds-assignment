@@ -7,7 +7,7 @@
       "i18n": {
         "sourceLocale": "en-SG",
         "locales": {
-          "zh-CN": "/src/locale/messages.zh.xlf"
+          "zh": "/src/locale/messages.zh.xlf"
         }
       },
       "projectType": "application",
@@ -20,7 +20,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "localize": [
-              "zh-CN"
+              "zh"
             ],
             "outputPath": "dist/gds-fe",
             "index": "src/index.html",
@@ -48,7 +48,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
