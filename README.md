@@ -209,7 +209,8 @@ To test the localized application, navigate to the gds/fe
    http-server ./dist/gds-fe
    ```
 3. Open a web browser of choice, and access the url to the local web server.
-4. Select zh from the index-menu.
+4. Open EmployeeController.java, and update the origins url for the url of the local web server.
+5. Select zh from the index-menu.
 
 This will take you to the version of the application localized to Chinese language. 
 To see the default version of the app in English, click on back, and select en-SG.
