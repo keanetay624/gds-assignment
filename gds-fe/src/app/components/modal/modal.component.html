@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>{{data.modalTitle}}</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-column">
+        <mat-form-field appearance="fill">
+            <mat-label>id</mat-label>
+            <input *ngIf="data.isAdd" matInput [(ngModel)]="data.id" disabled="false">
+            <input *ngIf="!data.isAdd" matInput [(ngModel)]="data.id" disabled="true">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input *ngIf="data.isAdd || data.isUpdate" matInput [(ngModel)]="data.name" disabled="false">
+            <input *ngIf="data.isDelete || data.isView" matInput [(ngModel)]="data.name" disabled="true">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Login</mat-label>
+            <input *ngIf="data.isAdd || data.isUpdate" matInput [(ngModel)]="data.login" disabled="false">
+            <input *ngIf="data.isDelete || data.isView" matInput [(ngModel)]="data.login" disabled="true">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Salary</mat-label>
+            <input *ngIf="data.isAdd || data.isUpdate" matInput [(ngModel)]="data.salary" matInput
+                [(ngModel)]="data.salary" disabled="false">
+            <input *ngIf="data.isDelete || data.isView" matInput [(ngModel)]="data.salary" matInput
+                [(ngModel)]="data.salary" disabled="true">
+        </mat-form-field>
+    </div>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button *ngIf="data.modalTitle === 'Edit Employee' || data.modalTitle === 'Add Employee'" mat-button
+        [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button *ngIf="data.modalTitle === 'Delete Employee'" mat-button [mat-dialog-close]="data"
+        cdkFocusInitial>Delete</button>
+</div>

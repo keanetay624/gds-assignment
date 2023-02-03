@@ -1,4 +1,4 @@
-import { Component, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, Output, ViewChild, Inject } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../Employee';
 import { Salary } from 'src/app/Salary';
@@ -11,6 +11,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs';
 import { Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 declare var window: any;
 
@@ -26,13 +29,6 @@ export class EmployeesTableComponent {
     login: '',
     salary: ''
   };
-
-  @Input() employeeToSave: Employee = {
-    id: '',
-    name: '',
-    login: '',
-    salary: ''
-  }
 
   @Output() modalTitle = "";
 
@@ -57,17 +53,7 @@ export class EmployeesTableComponent {
   errorMsg: string = "";
   countEmployeeResults: number = 0;
 
-  formModal: any;
-  confirmationModal: any;
-  employeeToDelete: Employee = {
-    id: '',
-    name: '',
-    login: '',
-    salary: ''
-  };
-
-
-  constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar) { }
+  constructor(private employeeService: EmployeeService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.employeeService.getEmployees('0', '50000', '10', '0', '+id').subscribe(
@@ -91,12 +77,6 @@ export class EmployeesTableComponent {
     this.limit = '10';
     this.minSal = '0';
     this.maxSal = '999999';
-    this.formModal = new window.bootstrap.Modal(
-      document.getElementById("exampleModal")
-    );
-    this.confirmationModal = new window.bootstrap.Modal(
-      document.getElementById("confirmationModal")
-    );
   }
 
   ngAfterViewInit() {
@@ -110,109 +90,6 @@ export class EmployeesTableComponent {
     this.maxSal = salary.maxSal;
     this.loadEmployeesPage();
     this.paginator!.firstPage();
-  }
-
-  openModal(employee: Employee, action: string) {
-    this.modalTitle = action;
-    this.formModal.show();
-    this.employee = employee;
-    this.employeeToSave = { ...this.employee }
-  }
-
-  closeFormModal() {
-    this.formModal.hide();
-    this.employee = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    };
-    this.employeeToDelete = this.employeeToSave;
-    this.employeeToSave = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    }
-  }
-
-  closeConfirmationModal() {
-    this.confirmationModal.hide();
-    this.employee = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    };
-    this.employeeToSave = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    }
-    this.employeeToDelete = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    }
-  }
-
-  saveModal(modalTitle: string) {
-    if (modalTitle === 'Edit Employee') {
-      this.employeeService.updateEmployee(this.employeeToSave).subscribe(
-        (employees) => {
-          this.employees = this.employees.filter(e => e.id != employees[0].id);
-          this.employees.push(employees[0]);
-          this.sortedData.push(employees[0]);
-        }, (error) => {
-          if (error && error.error && error.error.message && error.error.error) {
-            this.errorMsg = error.error.message + ": " + error.error.error;
-            this.snackBar.open(this.errorMsg, 'Dismiss', {
-              duration: 3000
-            });
-          }
-        });
-    } else {
-      this.employeeService.addEmployee(this.employeeToSave).subscribe(
-        (employees) => {
-          this.employees.push(employees[0]);
-          this.sortedData.push(employees[0]);
-          this.countEmployeeResults = this.sortedData.length;
-        }, (error) => {
-          if (error && error.error && error.error.message && error.error.error) {
-            this.errorMsg = error.error.message + ": " + error.error.error;
-            this.snackBar.open(this.errorMsg, 'Dismiss', {
-              duration: 3000
-            });
-          }
-        });
-    }
-    this.closeFormModal();
-  }
-
-  deleteEmployeeModal() {
-    this.confirmationModal.show();
-    this.closeFormModal();
-  }
-
-  confirmDeleteEmployee() {
-    this.employeeService.deleteEmployee(this.employeeToDelete).subscribe(
-      (employees) => {
-        this.employees = this.employees.filter(e => e.id != employees[0].id);
-        this.sortedData = this.sortedData.filter(e => e.id != employees[0].id);
-      });
-    this.closeConfirmationModal();
-  }
-
-  addEmployee() {
-    const employeeToCreate: Employee = {
-      id: '',
-      name: '',
-      login: '',
-      salary: ''
-    }
-    this.openModal(employeeToCreate, 'Add Employee');
   }
 
   loadEmployeesPage() {
@@ -237,8 +114,6 @@ export class EmployeesTableComponent {
       });
   }
 
-
-
   sortData(sort: Sort) {
     const data = this.employees.slice();
     if (!sort.active || sort.direction === '') {
@@ -262,6 +137,96 @@ export class EmployeesTableComponent {
           return 0;
       }
     });
+  }
+  openDialog(employee: Employee, modalTitle: string): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      data: {
+        id: employee.id,
+        name: employee.name,
+        login: employee.login,
+        salary: employee.salary,
+        modalTitle: modalTitle,
+        isAdd: modalTitle === 'Add Employee',
+        isDelete: modalTitle === 'Delete Employee',
+        isView: modalTitle === 'View Employee',
+        isUpdate: modalTitle === 'Update Employee'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+      if (result !== undefined) {
+        const saveEmployee: Employee = {
+          id: result.id,
+          name: result.name,
+          login: result.login,
+          salary: result.salary
+        }
+        console.log("result", result)
+
+        if (result.isDelete) {
+          console.log("deleting employee: ", saveEmployee);
+          this.deleteEmployee(saveEmployee)
+          return;
+        }
+
+        if (result.isAdd) {
+          console.log("adding employee: ", saveEmployee);
+          this.addEmployee(saveEmployee)
+          return;
+        }
+        console.log("updating employee: ", saveEmployee);
+        this.updateEmployee(saveEmployee)
+      }
+    });
+  }
+
+  updateEmployee(employee: Employee) {
+    this.employeeService.updateEmployee(employee).subscribe(
+      (employees) => {
+        this.employees = this.employees.filter(e => e.id != employees[0].id);
+        this.employees.push(employees[0]);
+        this.sortedData.push(employees[0]);
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg = error.error.message + ": " + error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
+        }
+      });
+  }
+
+  deleteEmployee(employee: Employee) {
+    this.employeeService.deleteEmployee(employee).subscribe(
+      (employees) => {
+        this.employees = this.employees.filter(e => e.id != employees[0].id);
+        this.sortedData = this.sortedData.filter(e => e.id != employees[0].id);
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg = error.error.message + ": " + error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
+        }
+      });
+  }
+
+  addEmployee(employee: Employee) {
+    this.employeeService.addEmployee(employee).subscribe(
+      (employees) => {
+        this.employees.push(employees[0]);
+        this.sortedData.push(employees[0]);
+        this.countEmployeeResults = this.sortedData.length;
+      }, (error) => {
+        if (error && error.error && error.error.message && error.error.error) {
+          this.errorMsg = error.error.message + ": " + error.error.error;
+          this.snackBar.open(this.errorMsg, 'Dismiss', {
+            duration: 3000
+          });
+        }
+      });
   }
 }
 

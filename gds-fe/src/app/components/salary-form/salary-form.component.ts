@@ -21,18 +21,19 @@ export class SalaryFormComponent {
 
   constructor(private employeeService: EmployeeService) { }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     // @ts-ignore
     merge(fromEvent(this.minSalary.nativeElement, 'keyup'), fromEvent(this.maxSalary.nativeElement, 'keyup'))
-    .pipe(
-      debounceTime(150), distinctUntilChanged(),
-      tap(() => {
-        const sal = {
-          minSal: this.minSal,
-          maxSal: this.maxSal
-        }
-        this.onSearchSalaryForm.emit(sal)
-      })
-    ).subscribe()
+      .pipe(
+        debounceTime(150), distinctUntilChanged(),
+        tap(() => {
+          const sal = {
+            minSal: this.minSal,
+            maxSal: this.maxSal
+          }
+          this.onSearchSalaryForm.emit(sal)
+          console.log('emitting salary')
+        })
+      ).subscribe()
   }
 }
