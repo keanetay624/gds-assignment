@@ -19,6 +19,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Salary</mat-label>
+            <span matTextPrefix>$&nbsp;</span>
             <input *ngIf="data.isAdd || data.isUpdate" matInput [(ngModel)]="data.salary" matInput
                 [(ngModel)]="data.salary" disabled="false">
             <input *ngIf="data.isDelete || data.isView" matInput [(ngModel)]="data.salary" matInput
