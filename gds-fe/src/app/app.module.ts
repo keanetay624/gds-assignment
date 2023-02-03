@@ -13,7 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { EmployeesListComponent } from './components/employees-list/employees-list.component';
+import { EmployeesTableComponent } from './components/employees-table/employees-table.component';
 import { SalaryFormComponent } from './components/salary-form/salary-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -23,7 +23,7 @@ import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeesListComponent,
+    EmployeesTableComponent,
     SalaryFormComponent,
     ToolbarComponent,
   ],

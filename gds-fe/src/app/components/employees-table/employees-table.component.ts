@@ -15,11 +15,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 declare var window: any;
 
 @Component({
-  selector: 'app-employees-list',
-  templateUrl: './employees-list.component.html',
-  styleUrls: ['./employees-list.component.css']
+  selector: 'app-employees-table',
+  templateUrl: './employees-table.component.html',
+  styleUrls: ['./employees-table.component.css']
 })
-export class EmployeesListComponent {
+export class EmployeesTableComponent {
   @Input() employee: Employee = {
     id: '',
     name: '',
